@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+	<UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Platforms>AnyCPU;x64</Platforms>
+	<LangVersion>preview</LangVersion>
+	<Configurations>2023-Debug;2024-Debug;2025-Debug;2026-Debug;2023-Release;2024-Release;2025-Release;2026-Release</Configurations>
+	<VersionTarget>$(Configuration.Substring(0, 4))</VersionTarget>
+	<DefineConstants>$(DefineConstants);V$(VersionTarget)</DefineConstants>
+	<Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\PayMeACoffe.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+  </ItemGroup>
+	<ItemGroup>
+		<Using Include="Autodesk.Revit.DB" />
+		<Using Include="Autodesk.Revit.UI" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\G.wpf\G.wpf.csproj" />
+    <ProjectReference Include="..\GPlus.Base\GPlus.Base.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\PayMeACoffe.png" />
+  </ItemGroup>
+	
+</Project>

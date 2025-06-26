@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+	<Name>G.plus</Name>
+    <FullClassName>GPlus.App</FullClassName>
+    <AddInId>75FA216D-AAB3-4E8E-88A3-C312610C3F05</AddInId>
+    <Text>G.plus</Text>
+    <Description>G.algos for Revit</Description>
+	<Assembly>@ASSEMBLY_PATH@</Assembly>
+    <VendorId>etc-tec</VendorId>
+    <VendorDescription>etc-tec</VendorDescription>
+    <VisibilityMode>VisibleInProject</VisibilityMode>
+  </AddIn>
+
+</RevitAddIns>

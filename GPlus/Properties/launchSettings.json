@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "GPlus": {
+      "commandName": "Project"
+    },
+    "GPlusDebug": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\Autodesk\\Revit 2026\\Revit.exe",
+      "commandLineArgs": "\"C:\\Users\\amilc\\Documents\\Snowdon Towers Sample Architectura GSuitel.rvt\""
+    }
+  }
+}

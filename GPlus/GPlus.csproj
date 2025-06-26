@@ -1,0 +1,134 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<OutputType>Library</OutputType>
+		<UseWPF>true</UseWPF>
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
+		<Product>Gplus</Product>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Configurations>2023-Debug;2024-Debug;2025-Debug;2026-Debug;2023-Release;2024-Release;2025-Release;2026-Release</Configurations>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+		<Optimize>false</Optimize>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<Version>1.0.0</Version>
+	</PropertyGroup>						
+	
+	<!--Custom Variables-->
+	<PropertyGroup>
+		<VersionTarget>$(Configuration.Substring(0, 4))</VersionTarget>
+		<DefineConstants>$(DefineConstants);V$(VersionTarget)</DefineConstants>
+		<PackageFolder>$(AppData)\Autodesk\ApplicationPlugins\$(Product).bundle\</PackageFolder>
+		<PackageContentFolder>$(AppData)\Autodesk\ApplicationPlugins\$(Product).bundle\Contents\$(VersionTarget)</PackageContentFolder>
+		<AddinFolder>$(AppData)\Autodesk\Revit\Addins\$(VersionTarget)</AddinFolder>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<ReleaseDate>$([System.DateTime]::Now.ToString("dd-MM-yyyy"))</ReleaseDate>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\applyLoc_32.svg" />
+	  <None Remove="Resources\coffe_32.svg" />
+	  <None Remove="Resources\Galgo_32.svg" />
+	  <None Remove="Resources\Loc_32.svg" />
+	  <None Remove="Resources\manageLinks_32.svg" />
+	  <None Remove="Resources\refresh_loc_32.svg" />
+	  <None Remove="Resources\takeABreak_32.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AssemblyMetadata Include="ReleaseDate" Value="$(ReleaseDate)" />
+	</ItemGroup>
+	
+	
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\GPlus.Base\GPlus.Base.csproj" />
+	  <ProjectReference Include="..\GPlus.UI\GPlus.UI.csproj" />
+	</ItemGroup>
+	
+	
+	
+	<ItemGroup>
+	  <Resource Include="Resources\RibbonButtons\applyLoc_32.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	</ItemGroup>
+	<ItemGroup>
+	<Resource Include="Resources\RibbonButtons\coffe_16.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	</ItemGroup>
+	<ItemGroup>
+	  <Resource Include="Resources\RibbonButtons\Galgo_16.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	</ItemGroup>
+	<ItemGroup>
+	  <Resource Include="Resources\RibbonButtons\localizations_32.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	</ItemGroup>
+	<ItemGroup>
+	  <Resource Include="Resources\RibbonButtons\manageLinks_32.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	</ItemGroup>
+	<ItemGroup>
+	  <Resource Include="Resources\RibbonButtons\refreshLoc_32.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	</ItemGroup>
+	<ItemGroup>
+	  <Resource Include="Resources\RibbonButtons\takeABreak_16.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	</ItemGroup> 
+
+
+  <ItemGroup>
+    <Using Include="Autodesk.Revit.DB" />
+	<Using Include="Autodesk.Revit.UI" />
+	<Using Include="GPlus.Base.Resources" />
+	<Using Include="GPlus.UI.ViewsModels" />
+	<Using Include="GPlus.UI.Views" />
+  </ItemGroup>
+
+	<PropertyGroup Condition="$(Configuration.EndsWith('Debug'))">
+		<TargetPath>$(MSBuildProjectDirectory)\bin\$(Configuration)\GPlus.dll</TargetPath>	
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.EndsWith('Release'))">
+		<TargetPath>$(PackageContentFolder)\GPlus.dll</TargetPath>
+		<OutputPath>$(PackageContentFolder)\</OutputPath>
+	</PropertyGroup>
+
+
+	<!--GenerateAddin-->
+	<Target Name="GenerateAddinFile" AfterTargets="Build">
+		<ReadLinesFromFile File="Manifest/GPlus.addin.template">
+			<Output TaskParameter="Lines" ItemName="AddinLines" />
+		</ReadLinesFromFile>
+
+		<ItemGroup>
+			<UpdatedAddin Include="@(AddinLines-&gt;Replace('@ASSEMBLY_PATH@', '$(TargetPath)'))" />
+		</ItemGroup>
+
+		<WriteLinesToFile File="$(AddinFolder)\GPlus.addin" Lines="@(UpdatedAddin)" Overwrite="true" />
+	</Target>
+
+	<!--Generate bunlde-->
+	<Target Name="CopyToOutput" AfterTargets="Build" Condition="$(Configuration.EndsWith('Release'))">
+		<Message Text="Copying files to $(TargetPath)" Importance="high" />
+		<Message Text="Copying files to $(PackageContentFolder)" Importance="high" />
+		<MakeDir Directories="$(PackageContentFolder)" />
+		<Copy SourceFiles="Manifest/PackageContents.xml" DestinationFolder="$(PackageFolder)" />
+	</Target>
+	<Target Name="SignDLL" AfterTargets="Build">
+		<Exec Command="&quot;C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x64\signtool.exe&quot; sign /f &quot;$(ProjectDir)gplus_cert.pfx&quot; /p Bill@2017 /tr http://timestamp.digicert.com /td sha256 /fd sha256 &quot;$(TargetPath)&quot;" />
+	</Target>
+</Project>

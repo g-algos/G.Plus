@@ -1,0 +1,44 @@
+﻿<Window x:Class="GPlus.UI.Views.AboutView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:converters="clr-namespace:GPlus.UI.Helpers.Converters"
+    xmlns:controls="clr-namespace:G.wpf.Controls;assembly=G.wpf"
+    xmlns:contents="clr-namespace:GPlus.Base.Resources.Localizations;assembly=GPlus.Base" 
+    mc:Ignorable="d"
+    Title="{x:Static contents:Content.About}" SizeToContent="Height" Width="300" ResizeMode="NoResize"  Topmost="True" WindowStartupLocation="Manual">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/G.wpf;component/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid  Margin="{StaticResource PaddingSM}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row ="0" Grid.Column="0" Style="{StaticResource LabelMedium}" Content="{x:Static contents:Content.Product}" Margin="{StaticResource PaddingSM}"/>
+        <Label Grid.Row ="1" Grid.Column="0" Style="{StaticResource LabelMedium}" Content="{x:Static contents:Content.Version}" Margin="{StaticResource PaddingSM}"/>
+        <Label Grid.Row ="2" Grid.Column="0" Style="{StaticResource LabelMedium}" Content="{x:Static contents:Content.Release}" Margin="{StaticResource PaddingSM}"/>
+        <Label Grid.Row ="3" Grid.Column="0" Style="{StaticResource LabelMedium}" Content="{x:Static contents:Content.Vendor}" Margin="{StaticResource PaddingSM}"/>
+        <Label Grid.Row ="4" Grid.Column="0" Style="{StaticResource LabelMedium}" Content="{x:Static contents:Content.Contact}" Margin="{StaticResource PaddingSM}"/>
+        <Label Grid.Row ="5" Grid.Column="0" Style="{StaticResource LabelMedium}" Content="{x:Static contents:Content.Site}" Margin="{StaticResource PaddingSM}"/>
+        <TextBox Grid.Row ="0" Grid.Column="1" Style="{StaticResource GTextBox}" Text="{Binding Product}" IsEnabled="False" Margin="{StaticResource PaddingSM}"/>
+        <TextBox Grid.Row ="1" Grid.Column="1" Style="{StaticResource GTextBox}" Text="{Binding Version}" IsEnabled="False" Margin="{StaticResource PaddingSM}"/>
+        <TextBox Grid.Row ="2" Grid.Column="1" Style="{StaticResource GTextBox}" Text="{Binding Launching}" IsEnabled="False" Margin="{StaticResource PaddingSM}"/>
+        <TextBox Grid.Row ="3" Grid.Column="1" Style="{StaticResource GTextBox}" Text="{Binding Vendor}" IsEnabled="False" Margin="{StaticResource PaddingSM}"/>
+        <TextBox Grid.Row ="4" Grid.Column="1" Style="{StaticResource GTextBox}" Text="{Binding Contact}" IsEnabled="False" Margin="{StaticResource PaddingSM}"/>
+        <TextBox Grid.Row ="5" Grid.Column="1" Style="{StaticResource GTextBox}" Text="{Binding Site}" IsEnabled="False" Margin="{StaticResource PaddingSM}"/>
+    </Grid>
+</Window>

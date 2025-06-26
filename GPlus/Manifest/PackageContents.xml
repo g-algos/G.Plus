@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<ApplicationPackage SchemaVersion="1.0" AutodeskProduct="Revit" ProductType="Application">
+	<CompanyDetails>
+		<CompanyName>etc-tec</CompanyName>
+		<CompanyUrl>https://g-algos.com</CompanyUrl>
+	</CompanyDetails>
+	<Components>
+		<ComponentEntry AppName="G.plus" ModuleName="./Contents/2023/GPlus.dll" AppDescription="Descrição curta do teu plugin">
+			<RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="2023" SeriesMax="2023" />
+			<ComponentEntryAppType>Application</ComponentEntryAppType>
+		</ComponentEntry>
+	</Components>
+	<Components>
+		<ComponentEntry AppName="G.plus" ModuleName="./Contents/2024/GPlus.dll" AppDescription="Descrição curta do teu plugin">
+			<RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="2024" SeriesMax="2024" />
+			<ComponentEntryAppType>Application</ComponentEntryAppType>
+		</ComponentEntry>
+	</Components>
+	<Components>
+		<ComponentEntry AppName="G.plus" ModuleName="./Contents/2025/GPlus.dll" AppDescription="Descrição curta do teu plugin">
+			<RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="2025" SeriesMax="2025" />
+			<ComponentEntryAppType>Application</ComponentEntryAppType>
+		</ComponentEntry>
+	</Components>
+	<Components>
+		<ComponentEntry AppName="G.plus" ModuleName="./Contents/2026/GPlus.dll" AppDescription="Descrição curta do teu plugin">
+			<RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="2026" SeriesMax="2026" />
+			<ComponentEntryAppType>Application</ComponentEntryAppType>
+		</ComponentEntry>
+	</Components>
+	<ApplicationPackagePaths>
+		<ApplicationPackagePath>Gplus.bundle</ApplicationPackagePath>
+	</ApplicationPackagePaths>
+</ApplicationPackage>

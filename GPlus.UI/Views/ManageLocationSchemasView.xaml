@@ -1,0 +1,199 @@
+﻿<Window x:Class="GPlus.UI.Views.ManageLocationSchemasView"  
+        Name="ManageLocalizationSchemasWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"  
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
+        xmlns:local="clr-namespace:GPlus.UI.Views"  
+        xmlns:converters="clr-namespace:GPlus.UI.Helpers.Converters"  
+        xmlns:commands="clr-namespace:G.wpf.Commands;assembly=G.wpf"
+        xmlns:viewModels="clr-namespace:GPlus.UI.ViewsModels"  
+        xmlns:contents="clr-namespace:GPlus.Base.Resources.Localizations;assembly=GPlus.Base"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"  
+        Title="{x:Static contents:Content.ManageLocationsSchemas}" Height="450" Width="800" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/G.wpf;component/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <converters:NullNameToAllConverter x:Key="NullNameToAllConverter" />
+            <converters:RevitColorToBrushConverter x:Key="RevitColorToBrushConverter" />
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Name ="MainGrid" Margin="{StaticResource PaddingDefault}">  
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Name="LeftPanel" Width="200"/>
+            <ColumnDefinition Name="Data" Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Name ="RightPanel" Width="0"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="3" Background="{StaticResource GreyBrush}"/>
+        <Border Grid.Column="1" Grid.RowSpan="2" 
+                Width="1" 
+                Background="{StaticResource BorderBrushStrong}"
+                HorizontalAlignment="Center" />
+
+        <!-- Left Panel -->
+        <Grid Grid.Column="0" Margin="{StaticResource PaddingXS}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="{x:Static contents:Content.LocationScheme}" Style="{StaticResource LabelMedium}" Grid.Row="0"/>
+            <TextBox x:Name="SeachBox" Grid.Row="1" 
+                     Style="{StaticResource GSearchTextBox}"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                     ToolTip="Search for localization schemas by name or parameter."/>
+            <ListBox Name="Localizations" Grid.Row="2" 
+                     Style="{StaticResource GListBox}" 
+                     Margin="{StaticResource PaddingVertical}"
+                ItemsSource="{Binding LocalizationSchemas}"  
+                SelectedItem="{Binding SelectedSchema, Mode=TwoWay}"  
+                DisplayMemberPath="Name"  
+                ScrollViewer.VerticalScrollBarVisibility="Auto" />
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center">
+                <Hyperlink Style="{StaticResource LinkLarge}"
+                    Command="{x:Static commands:GlobalCommands.OpenUriCommand}" 
+                    CommandParameter="http://g-algos.com/G.plus/LocalizationSchemas/">
+                    Learn more
+                </Hyperlink>
+                </TextBlock>
+                <StackPanel Grid.Column="10" Orientation="Horizontal">
+                    <Button Name="add" Style="{StaticResource SecondaryButtonSM}" Margin="{StaticResource PaddingXS}" Command="{Binding AddSchemaCommand}" ToolTip="{x:Static contents:Content.Add}">
+                        <Image Source="{StaticResource Add24}" Width="16" Height="16"/>
+                    </Button>
+                    <Button Name="remove" Style="{StaticResource SecondaryButtonSM}" Margin="{StaticResource PaddingXS}"  Command="{Binding DeleteSchemaCommand}" ToolTip="{x:Static contents:Content.Remove}">
+                        <Image Source="{StaticResource Remove24}" Width="16" Height="16"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        
+        <!-- Data Panel -->
+        <Grid Grid.Column="2" Margin="{StaticResource PaddingXS}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <!-- Data Grid -->
+            <DataGrid   Style="{StaticResource GStaticDataGrid}" Grid.Row="0"
+                    Name ="LocalizationItems"  
+                    ItemsSource="{Binding LocalizationSchemaItems}"  
+                    VerticalScrollBarVisibility="Auto"
+                    HorizontalScrollBarVisibility="Hidden"
+                    ScrollViewer.CanContentScroll="True"
+                    Margin="4,4,4,16"
+                    Background="{StaticResource GreyBrush}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{x:Static contents:Content.Value}" Width="*" Binding="{Binding Value}" IsReadOnly="True"/>
+                    <DataGridTemplateColumn Header="{x:Static contents:Content.Color}" Width="80">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource BasicButtonXS}"
+                                    Width="60" Height="15"
+                               Command="{Binding PickColorCommand}" 
+                               CommandParameter="{Binding}"   
+                               Background="{Binding Color, Converter={StaticResource RevitColorToBrushConverter}}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="{x:Static contents:Content.FillPattern}" Width="80">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox Style="{StaticResource GImageComboBoxXS}"
+                                          ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.FillPatterns}"
+                                          SelectedItem="{Binding FillPattern,Mode=TwoWay}" 
+                                          Width="80"
+                                          Height="20">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding PickFillPatternCommand}"
+                                                CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ComboBox}}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Name="refresh" Style="{StaticResource SecondaryButtonSM}" Margin="{StaticResource PaddingXS}" Command="{Binding RefreshSchemaCommand}" HorizontalAlignment="Left" ToolTip="{x:Static contents:Content.Refresh}">
+                    <Image Source="{StaticResource Refresh24}" Width="16" Height="16"/>
+                </Button>
+                <ToggleButton  Grid.Column="1" Name="expand" Style="{StaticResource ExpandCollapseSM}" Margin="{StaticResource PaddingXS}" HorizontalAlignment="Right" Click="Expand_Click"/>
+            </Grid>
+
+        </Grid>
+
+        <!-- Right Panel -->
+        <Grid Grid.Column="3" Margin="{StaticResource PaddingXS}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="{x:Static contents:Content.Name}" Grid.Row="0"/>
+            <TextBox Name ="LocalizationName" Grid.Row="1"  
+                   Style="{StaticResource GTextBox}"
+                   Text="{Binding SelectedSchema.Name, Mode=TwoWay}" />
+            <Label Content="{x:Static contents:Content.Parameter}" Grid.Row="2"/>
+            <TextBox Name="LocalizationParameter"  Grid.Row="3"
+                   Style="{StaticResource GTextBox}"
+                   IsReadOnly="True"  
+                   IsTabStop="False"  
+                   Focusable="False"  
+                   Text="{Binding SelectedSchema.Parameter.Name, Mode=OneWay}"/>
+            <RadioButton Style="{StaticResource LabelMedium}" Grid.Row="4" Margin="0,8,0,4" Content="{x:Static contents:Content.ByValue}" IsEnabled="False" IsChecked="{Binding SelectedSchema.ByValue, Mode=OneWay}"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="5" VerticalAlignment="Center" >
+                <RadioButton Name="ByRangeRadioButton" Style="{StaticResource LabelMedium}" VerticalAlignment="Center" Content="{x:Static contents:Content.ByRange}" IsEnabled="False"/>
+                <Label Content="{x:Static contents:Content.Step}" Style="{StaticResource LabelMedium}" Margin="10,0,0,0" 
+                       Visibility="{Binding IsChecked, ElementName=ByRangeRadioButton, Converter={StaticResource BoolToVis}, ConverterParameter=False}"
+                       VerticalAlignment="Center"/>
+                <TextBox Style="{StaticResource GTextBox}"
+                         IsEnabled="False"
+                      Width="48"
+                      Margin="{StaticResource PaddingXS}"
+                      Visibility="{Binding IsChecked, ElementName=ByRangeRadioButton, Converter={StaticResource BoolToVis}, ConverterParameter=False}"
+                      Text="{Binding Step, UpdateSourceTrigger=PropertyChanged}"/>      
+            </StackPanel>
+            <CheckBox Style="{StaticResource SmallCheckBox}" Content="{x:Static contents:Content.IncludeLinks}" Grid.Row="6" Margin="{StaticResource PaddingVertical}" IsChecked="{Binding SelectedSchema.IncludeLinks, Mode=TwoWay}"/>
+            <Label Content="{x:Static contents:Content.Categories}" Grid.Row="7" Style="{StaticResource LabelMedium}"/>
+            <ListBox Grid.Row="8"
+                IsEnabled="False"
+                Style="{StaticResource GListBox}" 
+                ItemsSource="{Binding SelectedSchema.Categories}"  
+                DisplayMemberPath="Name"  
+                ScrollViewer.VerticalScrollBarVisibility="Auto" />
+        </Grid>
+    </Grid>  
+</Window>

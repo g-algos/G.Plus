@@ -1,0 +1,91 @@
+﻿<Window x:Class="GPlus.UI.Views.NewSharedParametersView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GPlus.UI.Views"
+        xmlns:converters="clr-namespace:GPlus.UI.Helpers.Converters"
+        xmlns:controls="clr-namespace:G.wpf.Controls;assembly=G.wpf"
+        xmlns:contents="clr-namespace:GPlus.Base.Resources.Localizations;assembly=GPlus.Base" 
+        xmlns:commands="clr-namespace:G.wpf.Commands;assembly=G.wpf"
+        mc:Ignorable="d"
+        Title="{x:Static contents:Content.AddSharedParameter}" Height="Auto" Width="450" MaxHeight="450" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/G.wpf;component/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="{StaticResource PaddingDefault}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Style="{StaticResource LabelSmall}" Grid.Row="0" Margin="{StaticResource PaddingXS}"
+               Content="{x:Static contents:Content.NewSharedParameter}"/>
+        <!-- Data Grid -->
+            <DataGrid   Style="{StaticResource GStaticDataGrid}" Grid.Row="1"
+                         Name ="paremetersGrid"  
+                         ItemsSource="{Binding Parameters}"  
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Hidden"
+                         ScrollViewer.CanContentScroll="True"
+                         Margin="{StaticResource PaddingXS}"
+                         Background="{StaticResource GreyBrush}"
+                         SelectedItem="{Binding SelectedParameter}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{x:Static contents:Content.Name}" Width="*"
+                    Binding="{Binding Name}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn Header="{x:Static contents:Content.Type}" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox Style="{StaticResource GComboBox}"
+                                  ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.SpecTypes}"
+                                  SelectedItem="{Binding SpecType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                      DisplayMemberPath="Name"
+                                  Height="30">
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Width="30">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="pull" Style="{StaticResource SecondaryButtonXS}" Margin="{StaticResource PaddingXS}"
+                                    Command="{Binding DataContext.RemoveCommand,
+                                    RelativeSource={RelativeSource AncestorType=Window}}"
+                                    CommandParameter="{Binding}"
+                                    ToolTip="{x:Static contents:Content.Pull}">
+                                <Image Source="{StaticResource Remove24}" Width="16" Height="16"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <!-- Footer -->
+        <Grid DockPanel.Dock="Bottom" Margin="{StaticResource PaddingSM}" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" VerticalAlignment="Center">
+                <Hyperlink Style="{StaticResource LinkLarge}"
+                    Command="{x:Static commands:GlobalCommands.OpenUriCommand}" 
+                    CommandParameter="http://g-algos.com/G.plus/DataLinks/">
+                    Learn more
+                </Hyperlink>
+            </TextBlock>
+            <Button Grid.Column="1" Content="OK" IsDefault="True" Style="{StaticResource PrimaryButton}" Command="{Binding CreateAndCloseCommand}"/>
+        </Grid>
+    </Grid>
+</Window>
