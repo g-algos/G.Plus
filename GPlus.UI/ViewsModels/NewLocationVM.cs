@@ -4,6 +4,8 @@ using GPlus.Base.Extensions;
 using GPlus.Base.Models;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Windows;
+using MessageBox = System.Windows.MessageBox;
 
 namespace GPlus.UI.ViewsModels
 {
@@ -84,17 +86,32 @@ namespace GPlus.UI.ViewsModels
         {
             if (string.IsNullOrEmpty(Name))
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Warning", "Localization name cannot be empty.");
+                MessageBox.Show(
+                    Base.Resources.Localizations.Messages.LocNameMissing,
+                    Base.Resources.Localizations.Messages.Wait,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
                 return;
             }
             if (SelectedParameter == null)
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Warning", "Please select a parameter to use for localization.");
+                MessageBox.Show(
+                      Base.Resources.Localizations.Messages.LocParamMissing,
+                      Base.Resources.Localizations.Messages.Wait,
+                      MessageBoxButton.OK,
+                      MessageBoxImage.Warning
+                  );
                 return;
             }
             if (!SelectedCategories.Any())
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Warning", "Please select at least one category for localization.");
+                MessageBox.Show(
+                      Base.Resources.Localizations.Messages.LocCategorieMissing,
+                      Base.Resources.Localizations.Messages.Wait,
+                      MessageBoxButton.OK,
+                      MessageBoxImage.Warning
+                  );
                 return;
             }
 

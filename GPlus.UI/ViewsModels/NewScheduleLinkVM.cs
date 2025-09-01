@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using GPlus.Base.Models;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
+using System.Windows;
 
 namespace GPlus.UI.ViewsModels
 {
@@ -62,12 +63,22 @@ namespace GPlus.UI.ViewsModels
         {
             if (Schedule== null)
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Warning", "Schedule name cannot be empty.");
+                System.Windows.MessageBox.Show(
+                            Base.Resources.Localizations.Messages.NoSchedule,
+                            Base.Resources.Localizations.Messages.Wait,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
                 return;
             }
             if (String.IsNullOrEmpty(Path))
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Warning", "Please select a link.");
+                System.Windows.MessageBox.Show(
+                    Base.Resources.Localizations.Messages.MissingPath,
+                    Base.Resources.Localizations.Messages.Wait,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
                 return;
             }
 

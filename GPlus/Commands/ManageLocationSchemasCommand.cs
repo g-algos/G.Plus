@@ -4,6 +4,7 @@ using GPlus.Base.Extensions;
 using GPlus.Base.Models;
 using GPlus.Base.Schemas;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace GPlus.Commands
 {
@@ -71,10 +72,10 @@ namespace GPlus.Commands
                     }
 
                     ManageLocationSchemasVM viewModel = new ManageLocationSchemasVM(listVM, selectedVM, _patterns);
-                    viewModel.AddSchema += (s, e) => { AddSchema(e, ActiveCommandModel.Document.ProjectInformation, viewModel); };
-                    viewModel.RemoveSchema += (s, e) => { RemoveSchema(e, ActiveCommandModel.Document.ProjectInformation, viewModel); };
-                    viewModel.RefreshSchema += (s, e) => { RefreshSchema(e, ActiveCommandModel.Document.ProjectInformation, viewModel); };
-                    viewModel.UpdateSchema += (s, e) => { UpdateSchema(e, ActiveCommandModel.Document.ProjectInformation, viewModel); };
+                    viewModel.AddSchema = (vm) => AddSchema(vm, ActiveCommandModel.Document.ProjectInformation, viewModel);
+                    viewModel.RemoveSchema = (vm) => RemoveSchema(vm, ActiveCommandModel.Document.ProjectInformation, viewModel);
+                    viewModel.RefreshSchema = (vm) => RefreshSchema(vm, ActiveCommandModel.Document.ProjectInformation, viewModel);
+                    viewModel.UpdateSchema = (vm) => UpdateSchema(vm, ActiveCommandModel.Document.ProjectInformation, viewModel);
                     var window = new ManageLocationSchemasView(viewModel);
                     _ = window.ShowDialog();
 
@@ -84,18 +85,17 @@ namespace GPlus.Commands
                 catch (Exception ex)
                 {
                     transaction.RollBack();
-                    var dialog = new TaskDialog(Base.Resources.Localizations.Messages.OOOps)
-                    {
-                        MainInstruction = Base.Resources.Localizations.Messages.Error,
-                        MainContent = ex.Message,
-                        CommonButtons = TaskDialogCommonButtons.Close
-                    };
-                    dialog.Show();
+                    MessageBox.Show(
+                        ex.Message,
+                        Base.Resources.Localizations.Messages.OOOps + " - " + Base.Resources.Localizations.Messages.Error,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
                     return Result.Failed;
                 }
             }
         }
-        private void UpdateSchema((string, object) e, ProjectInfo project, ManageLocationSchemasVM viewModel)
+        private (bool result, string message) UpdateSchema((string, object) e, ProjectInfo project, ManageLocationSchemasVM viewModel)
         {
             using (SubTransaction transaction = new SubTransaction(ActiveCommandModel.Document))
             {
@@ -103,15 +103,15 @@ namespace GPlus.Commands
                 {
                     transaction.Start();
                     var schema = Schema.Lookup(viewModel.SelectedSchema.Id);
-                    if (schema == null) return;
+                    if (schema == null) return (true, string.Empty);
                     var entity = project.GetEntity(schema);
-                    if (entity == null || !entity.IsValid()) return;
+                    if (entity == null || !entity.IsValid()) return (true, string.Empty);
                     var localizationSchema = new LocationSchema(project, entity, true);
                     var values = e.Item2;
                     if (e.Item1 == nameof(LocalizationVM.Items))
                     {
                         if (e.Item2 is not List<LocationItemVM> items)
-                            return;
+                            return (true, string.Empty);
                         values = items.Select(
 #if V2023
                             e => new LocalizationItemModel(e.Value, e.Color, e.FillPattern!.Id.IntegerValue))
@@ -122,82 +122,71 @@ namespace GPlus.Commands
                     }
                     localizationSchema.EditField(project, e.Item1, values);
                     transaction.Commit();
+                    return (true, string.Empty);
                 }
                 catch (Exception ex)
                 {
                     transaction.RollBack();
-                    var dialog = new TaskDialog(Base.Resources.Localizations.Messages.OOOps)
-                    {
-                        MainInstruction = Base.Resources.Localizations.Messages.Error,
-                        MainContent = ex.Message,
-                        CommonButtons = TaskDialogCommonButtons.Close
-                    };
-                    dialog.Show();
-                    return;
+                    return (false, ex.Message);
                 }
             }
         }
-        private static void RefreshSchema(LocalizationVM e, ProjectInfo project, ManageLocationSchemasVM viewModel)
+        private static (bool result, string message) RefreshSchema(LocalizationVM vm, ProjectInfo project, ManageLocationSchemasVM viewModel)
         {
             using (SubTransaction transaction = new SubTransaction(ActiveCommandModel.Document))
             {
                 try
                 {
                     transaction.Start();
-                    var schema = Schema.Lookup(e.Id);
-                    if (schema == null) return;
+                    var schema = Schema.Lookup(vm.Id);
+                    if (schema == null) return (true, string.Empty);
                     var entity = project.GetEntity(schema);
-                    if (entity == null || !entity.IsValid()) return;
+                    if (entity == null || !entity.IsValid()) return (true, string.Empty);
                     var localizationSchema = new LocationSchema(project, entity, true);
                     viewModel.LocalizationSchemaItems = new ObservableCollection<LocationItemVM>(localizationSchema.Items.Select(e => new LocationItemVM(e.Value, e.Color, _patterns.FirstOrDefault(p => p.Id == new ElementId(e.FillPattern)))));
                     transaction.Commit();
+                    return (true, string.Empty);
                 }
                 catch (Exception ex)
                 {
                     transaction.RollBack();
-                    var dialog = new TaskDialog(Base.Resources.Localizations.Messages.OOOps)
-                    {
-                        MainInstruction = Base.Resources.Localizations.Messages.Error,
-                        MainContent = ex.Message,
-                        CommonButtons = TaskDialogCommonButtons.Close
-                    };
-                    dialog.Show();
-                    return;
+                    MessageBox.Show(
+                        ex.Message,
+                        Base.Resources.Localizations.Messages.OOOps + " - " + Base.Resources.Localizations.Messages.Error,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
+                    transaction.RollBack();
+                    return (false, ex.Message);
                 }
             }
         }
-        private static void RemoveSchema(LocalizationVM e, ProjectInfo project, ManageLocationSchemasVM viewModel)
+        private static (bool result, string message) RemoveSchema(LocalizationVM vm, ProjectInfo project, ManageLocationSchemasVM viewModel)
         {
             using (SubTransaction transaction = new SubTransaction(ActiveCommandModel.Document))
             {
                 try
                 {
                     transaction.Start();
-                    var schema = Schema.Lookup(e.Id);
+                    var schema = Schema.Lookup(vm.Id);
                     var projectInfo = project;
                     projectInfo.DeleteEntity(schema);
 
-                    viewModel.AllSchemas.Remove(e);
-                    viewModel.LocalizationSchemas.Remove(e);
+                    viewModel.AllSchemas.Remove(vm);
+                    viewModel.LocalizationSchemas.Remove(vm);
                     viewModel.SelectedSchema = null;
                     ProjectLocationsShema.RemoveLocalizationModel(project, schema.GUID);
                     transaction.Commit();
+                    return (true, string.Empty);
                 }
                 catch (Exception ex)
                 {
                     transaction.RollBack();
-                    var dialog = new TaskDialog(Base.Resources.Localizations.Messages.OOOps)
-                    {
-                        MainInstruction = Base.Resources.Localizations.Messages.Error,
-                        MainContent = ex.Message,
-                        CommonButtons = TaskDialogCommonButtons.Close
-                    };
-                    dialog.Show();
-                    return;
+                    return (false, ex.Message);
                 }
             }
         }
-        private static void AddSchema(NewLocationVM e, ProjectInfo project, ManageLocationSchemasVM viewModel)
+        private static (bool result, string message) AddSchema(NewLocationVM vm, ProjectInfo project, ManageLocationSchemasVM viewModel)
         {
             using (SubTransaction transaction = new SubTransaction(ActiveCommandModel.Document))
             {
@@ -205,22 +194,22 @@ namespace GPlus.Commands
                 {
                     transaction.Start();
                     LocationSchema localizationSC = new LocationSchema(project,
-                    e.Name,
-                    e.SelectedCategories.Select(c => c.Id).ToList(),
-                    e.SelectedParameter.Id,
-                    e.ByValue,
-                    e.IncludeLinks,
-                    e.Step);
+                    vm.Name,
+                    vm.SelectedCategories.Select(c => c.Id).ToList(),
+                    vm.SelectedParameter.Id,
+                    vm.ByValue,
+                    vm.IncludeLinks,
+                    vm.Step);
 
 
                     LocalizationVM newLocalization = new LocalizationVM(
-                        e.Id,
-                        e.Name,
-                        e.SelectedCategories.ToList(),
-                        e.SelectedParameter,
-                        e.IncludeLinks,
-                        e.ByValue,
-                        e.Step
+                        vm.Id,
+                        vm.Name,
+                        vm.SelectedCategories.ToList(),
+                        vm.SelectedParameter,
+                        vm.IncludeLinks,
+                        vm.ByValue,
+                        vm.Step
                     );
 
                     newLocalization.Items = new ObservableCollection<LocationItemVM>(localizationSC.Items.Select(e => new LocationItemVM(e.Value, e.Color, _patterns.FirstOrDefault(p => p.Id == new ElementId(e.FillPattern)))));
@@ -230,18 +219,12 @@ namespace GPlus.Commands
                     //TODO scrool to the schema in the list
                     viewModel.SelectedSchema = newLocalization;
                     transaction.Commit();
+                    return (true, string.Empty);
                 }
                 catch (Exception ex)
                 {
                     transaction.RollBack();
-                    var dialog = new TaskDialog(Base.Resources.Localizations.Messages.OOOps)
-                    {
-                        MainInstruction = Base.Resources.Localizations.Messages.Error,
-                        MainContent = ex.Message,
-                        CommonButtons = TaskDialogCommonButtons.Close
-                    };
-                    dialog.Show();
-                    return;
+                    return (false, ex.Message);
                 }
             }
         }

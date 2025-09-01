@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.Attributes;
 using GPlus.Base.Models;
 using GPlus.Base.Schemas;
+using System.Windows;
 
 namespace GPlus.Commands
 {
@@ -32,13 +33,12 @@ namespace GPlus.Commands
                 catch (Exception ex)
                 {
                     transaction.RollBack();
-                    var dialog = new TaskDialog(Base.Resources.Localizations.Messages.OOOps)
-                    {
-                        MainInstruction = Base.Resources.Localizations.Messages.Error,
-                        MainContent = ex.Message,
-                        CommonButtons = TaskDialogCommonButtons.Close
-                    };
-                    dialog.Show();
+                    MessageBox.Show(
+                        ex.Message,
+                        Base.Resources.Localizations.Messages.OOOps + " - " + Base.Resources.Localizations.Messages.Error,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
                     return Result.Failed;
                 }
             }

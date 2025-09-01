@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.Attributes;
 using GPlus.Base.Models;
 using GPlus.Base.Schemas;
+using System.Windows;
 
 namespace GPlus.Commands
 {
@@ -26,6 +27,17 @@ namespace GPlus.Commands
                     List<IdentityGuidVM> listVM = ProjectLocationsShema.GetLocalizations(ActiveCommandModel.Document.ProjectInformation)
                                                 .Select(e=> new IdentityGuidVM() { Id = e.Id, Name = e.Name })
                                                 .ToList();
+                    if(listVM== null || listVM.Count == 0)
+                    {
+                        MessageBox.Show(
+                            Base.Resources.Localizations.Messages.NoLocalizations,
+                            Base.Resources.Localizations.Messages.Wait,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        transaction.RollBack();
+                        return Result.Cancelled;
+                    }
                     IdentityGuidVM selectedVM = null;
                     if(ViewLocationSchema.TryGetLocalization(ActiveCommandModel.View, out LocalizationModel localization))
                         selectedVM = new IdentityGuidVM() { Id =localization.Id, Name = localization.Name };
@@ -44,13 +56,12 @@ namespace GPlus.Commands
                 catch (Exception ex)
                 {
                     transaction.RollBack();
-                    var dialog = new TaskDialog(Base.Resources.Localizations.Messages.OOOps)
-                    {
-                        MainInstruction = Base.Resources.Localizations.Messages.Error,
-                        MainContent = ex.Message,
-                        CommonButtons = TaskDialogCommonButtons.Close
-                    };
-                    dialog.Show();
+                    MessageBox.Show(
+                        ex.Message,
+                        Base.Resources.Localizations.Messages.OOOps + " - " + Base.Resources.Localizations.Messages.Error,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
                     return Result.Failed;
                 }
             }
@@ -85,13 +96,12 @@ namespace GPlus.Commands
                 catch (Exception ex)
                 {
                     transaction.RollBack();
-                    var dialog = new TaskDialog(Base.Resources.Localizations.Messages.OOOps)
-                    {
-                        MainInstruction = Base.Resources.Localizations.Messages.Error,
-                        MainContent = ex.Message,
-                        CommonButtons = TaskDialogCommonButtons.Close
-                    };
-                    dialog.Show();
+                    MessageBox.Show(
+                        ex.Message,
+                        Base.Resources.Localizations.Messages.OOOps + " - " + Base.Resources.Localizations.Messages.Error,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
                     return;
                 }
             }

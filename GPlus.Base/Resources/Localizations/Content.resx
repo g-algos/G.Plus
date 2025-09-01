@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApplySchema" xml:space="preserve">
+    <value>Apply
+Schema</value>
+    <comment>Button</comment>
+  </data>
+  <data name="DataManagement" xml:space="preserve">
+    <value>Data Management</value>
+    <comment>Panel</comment>
+  </data>
+  <data name="DataSchemas" xml:space="preserve">
+    <value>Data
+Schemas</value>
+    <comment>Button</comment>
+  </data>
+  <data name="DataVisualization" xml:space="preserve">
+    <value>Data Visualization</value>
+    <comment>Panel</comment>
+  </data>
+  <data name="Extra" xml:space="preserve">
+    <value>...</value>
+    <comment>Tab</comment>
+  </data>
+  <data name="GPlus" xml:space="preserve">
+    <value>G.Plus</value>
+    <comment>Product Name</comment>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+    <comment>Button</comment>
+  </data>
+  <data name="LocationSchemas" xml:space="preserve">
+    <value>Location
+Schemes</value>
+    <comment>Button</comment>
+  </data>
+  <data name="ManageLinks" xml:space="preserve">
+    <value>Manage
+Links</value>
+    <comment>Button</comment>
+  </data>
+  <data name="TakeBreak" xml:space="preserve">
+    <value>Take a
+Break</value>
+    <comment>Button</comment>
+  </data>
+  <data name="PayMeCoffee" xml:space="preserve">
+    <value>Pay me
+a Coffee</value>
+    <comment>Button</comment>
+  </data>
+  <data name="Step" xml:space="preserve">
+    <value>Step</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+    <comment>Column Header</comment>
+  </data>
+  <data name="LocationScheme" xml:space="preserve">
+    <value>Location scheme </value>
+    <comment>Label</comment>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ManageLocationsSchemas" xml:space="preserve">
+    <value>Manage Locations Schemes</value>
+    <comment>View</comment>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>OK</value>
+    <comment>Button</comment>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>Parameters</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>Parameter</value>
+    <comment>Label</comment>
+  </data>
+  <data name="LearnMore" xml:space="preserve">
+    <value>Learn More</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ByRange" xml:space="preserve">
+    <value>By Range</value>
+    <comment>Button</comment>
+  </data>
+  <data name="FillPattern" xml:space="preserve">
+    <value>Fill Pattern</value>
+    <comment>Column Header</comment>
+  </data>
+  <data name="ByValue" xml:space="preserve">
+    <value>By Value</value>
+    <comment>Button</comment>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>Color</value>
+    <comment>Column Header</comment>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Categories</value>
+    <comment>Label</comment>
+  </data>
+  <data name="IncludeLinks" xml:space="preserve">
+    <value>Include elements from links</value>
+    <comment>Label</comment>
+  </data>
+  <data name="SelectScheme" xml:space="preserve">
+    <value>Select scheme</value>
+    <comment>View</comment>
+  </data>
+  <data name="Schedule" xml:space="preserve">
+    <value>Schedule</value>
+    <comment>Column Header</comment>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+    <comment>Column Header</comment>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Path</value>
+    <comment>Column Header</comment>
+  </data>
+  <data name="PathType" xml:space="preserve">
+    <value>Path Type</value>
+    <comment>Column Header</comment>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+    <comment>Column Header</comment>
+  </data>
+  <data name="LastSync" xml:space="preserve">
+    <value>Last Sync</value>
+    <comment>Column Header</comment>
+  </data>
+  <data name="Pull" xml:space="preserve">
+    <value>Pull</value>
+    <comment>Tool Tip</comment>
+  </data>
+  <data name="Push" xml:space="preserve">
+    <value>Push</value>
+    <comment>Tool Tip</comment>
+  </data>
+  <data name="Sync" xml:space="preserve">
+    <value>Sync</value>
+    <comment>Tool Tip</comment>
+  </data>
+  <data name="Compare" xml:space="preserve">
+    <value>Compare</value>
+    <comment>Tool Tip</comment>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+    <comment>Tool tip</comment>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+    <comment>Tool tip</comment>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+    <comment>Tool tip</comment>
+  </data>
+  <data name="ManageDataLinks" xml:space="preserve">
+    <value>Manage Data Links</value>
+    <comment>View</comment>
+  </data>
+  <data name="NewDataLink" xml:space="preserve">
+    <value>New data link</value>
+    <comment>View</comment>
+  </data>
+  <data name="Instance" xml:space="preserve">
+    <value>Instance</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Absolute" xml:space="preserve">
+    <value>Absolute</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Relative" xml:space="preserve">
+    <value>Relative</value>
+    <comment>Label</comment>
+  </data>
+  <data name="DataLink" xml:space="preserve">
+    <value>Data link</value>
+    <comment>Label</comment>
+  </data>
+  <data name="SearchLink" xml:space="preserve">
+    <value>Search for links by schedule name.</value>
+    <comment>Tool tip</comment>
+  </data>
+  <data name="MergeSelected" xml:space="preserve">
+    <value>Merge Selected</value>
+    <comment>Tool tip</comment>
+  </data>
+  <data name="PayMeACoffeMessage" xml:space="preserve">
+    <value>To keep all our G.Algo tools free and fresh, we rely on your kind donations.
+If you find them useful, consider buying us a coffee!</value>
+    <comment>Sentence</comment>
+  </data>
+  <data name="Donate" xml:space="preserve">
+    <value>DONATE</value>
+    <comment>Button</comment>
+  </data>
+  <data name="TakeABreak" xml:space="preserve">
+    <value>Take a break!</value>
+    <comment>Window</comment>
+  </data>
+  <data name="TakeABreakMessage" xml:space="preserve">
+    <value>With G.algo tools, you save so much time that we honestly think you deserve to enjoy it.
+Go ahead, take a break! We’ve got you covered. No one will ever know.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="BreakInProgress" xml:space="preserve">
+    <value>Your task is currently being processed and is expected to complete within approximately 5 minutes.
+In the meantime, feel free to step away and take a short break!</value>
+    <comment>Message</comment>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Product</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Vendor" xml:space="preserve">
+    <value>Vendor</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Release" xml:space="preserve">
+    <value>Release</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Site" xml:space="preserve">
+    <value>Site</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+    <comment>Label</comment>
+  </data>
+  <data name="NewLocationScheme" xml:space="preserve">
+    <value>New location scheme</value>
+    <comment>View</comment>
+  </data>
+  <data name="NewSharedParameter" xml:space="preserve">
+    <value>The Excel table has new columns. 
+To add them as shared parameters, specify their type and proceed.</value>
+    <comment>Label</comment>
+  </data>
+  <data name="AddSharedParameter" xml:space="preserve">
+    <value>Add Shared Parameters</value>
+    <comment>Window</comment>
+  </data>
+  <data name="DeleteSchema" xml:space="preserve">
+    <value>Delete schema</value>
+    <comment>Label</comment>
+  </data>
+</root>

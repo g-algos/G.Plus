@@ -4,7 +4,9 @@ using GPlus.UI.Views;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Windows;
 using System.Windows.Data;
+using MessageBox = System.Windows.MessageBox;
 
 namespace GPlus.UI.ViewsModels
 {
@@ -23,11 +25,11 @@ namespace GPlus.UI.ViewsModels
 
 
         public Func<NewScheduleLinkVM, bool>? AddLinkCallback;
-        public event EventHandler<ElementId> RemoveLink;
-        public event EventHandler<ElementId> Push;
-        public event EventHandler<ElementId> Pull;
-        public event EventHandler<ElementId> Sync;
-        public event EventHandler<Tuple<ElementId, DataTable?, DataTable?>?> Merge;
+        public Func<ElementId, (bool, string)> RemoveLink;
+        public Func<ElementId, (bool, string)> Push;
+        public Func<ElementId, (bool, string)> Pull;
+        public Func<ElementId, (bool, string)> Sync;
+        public Func<Tuple<ElementId, DataTable?, DataTable?>?, (bool, string)> Merge;
 
         [ObservableProperty]
         private ScheduleLinkVM? _linkToScroll;
@@ -91,9 +93,19 @@ namespace GPlus.UI.ViewsModels
         [RelayCommand] private void OnRemoveLink()
         {
             if (SelectedLink == null) return;
-            RemoveLink?.Invoke(this, SelectedLink.Schedule.Id);
-            AllLinks.Remove(SelectedLink!);
-            SelectedLink = null;
+            (bool success, string message) result =  RemoveLink?.Invoke(SelectedLink.Schedule.Id) ?? (false, "");
+            if (!result.success)
+                MessageBox.Show(
+                    result.message,
+                    Base.Resources.Localizations.Messages.OOOps + " - " + Base.Resources.Localizations.Messages.Error,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+            else
+            {
+                AllLinks.Remove(SelectedLink!);
+                SelectedLink = null;
+            }
         }
 
 
@@ -101,38 +113,87 @@ namespace GPlus.UI.ViewsModels
         private void OnPush()
         {
             if (SelectedLink == null) return;
-            Push?.Invoke(this, SelectedLink.Schedule.Id);
+            (bool success , string message) result = Push?.Invoke(SelectedLink.Schedule.Id)??(false,"");
+            if(!result.success)
+                MessageBox.Show(
+                    result.message,
+                    Base.Resources.Localizations.Messages.OOOps + " - " + Base.Resources.Localizations.Messages.Error,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
         }
         [RelayCommand]
         private void OnPull()
         {
             if (SelectedLink == null) return;
-            Pull?.Invoke(this, SelectedLink.Schedule.Id);
+            (bool success, string message) result = Pull?.Invoke(SelectedLink.Schedule.Id) ?? (false, "");
+            if (!result.success)
+                MessageBox.Show(
+                    result.message,
+                    Base.Resources.Localizations.Messages.OOOps + " - " + Base.Resources.Localizations.Messages.Error,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
         }
         [RelayCommand]
         private void OnSync()
         {
             if (SelectedLink == null) return;
-            Sync?.Invoke(this, SelectedLink.Schedule.Id);
+            (bool success, string message) result = Sync?.Invoke(SelectedLink.Schedule.Id) ?? (false, "");
+            if (!result.success)
+                MessageBox.Show(
+                    result.message,
+                    Base.Resources.Localizations.Messages.OOOps + " - " + Base.Resources.Localizations.Messages.Error,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
         }
 
-        public Func<ElementId, Tuple<DataTable?, DataTable?>>? GetComparisonTable { get; set; }
+        public Func<ElementId, (DataTable?, DataTable?, bool, string)>? GetComparisonTable { get; set; }
         [RelayCommand]
         private void OnOpen()
         {
             if (SelectedLink == null || GetComparisonTable == null) return;
 
-            var tables = GetComparisonTable.Invoke(SelectedLink.Schedule.Id);
-            var rvtTable = tables.Item1;
-            var xlsTable = tables.Item2;
 
-            if (rvtTable == null || rvtTable.Rows.Count == 0 || xlsTable == null || xlsTable.Rows.Count == 0)
+            (DataTable? rvtTable, DataTable? xlsTable, bool sucess, string message) result = GetComparisonTable.Invoke(SelectedLink.Schedule.Id);
+           
+            if(result.sucess == false)
+            {
+                MessageBox.Show(
+                    result.message,
+                    Base.Resources.Localizations.Messages.OOOps + " - " + Base.Resources.Localizations.Messages.Error,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+                return;
+            }
+            if (result.rvtTable == null || result. rvtTable.Rows.Count == 0 || result.xlsTable == null || result.xlsTable.Rows.Count == 0)
             {
                 Autodesk.Revit.UI.TaskDialog.Show(Base.Resources.Localizations.Messages.Wait, Base.Resources.Localizations.Messages.NoChanges);
                 return;
             }
-            var viewModel = new DataLinkConflictsVM(rvtTable, xlsTable);
-            viewModel.RequestMerge += (s, e) => Merge.Invoke(this, new(SelectedLink.Schedule.Id, e.Item1, e.Item2));
+            var viewModel = new DataLinkConflictsVM(result.rvtTable, result.xlsTable);
+
+
+            viewModel.RequestMerge += (s, e) =>
+            {
+                if (Merge != null && e != null && SelectedLink?.Schedule != null)
+                {
+                    (bool success, string message) result = Merge(new Tuple<ElementId, DataTable?, DataTable?>(
+                        SelectedLink.Schedule.Id,
+                        e.Item1,
+                        e.Item2));
+
+                    if (!result.success)
+                        MessageBox.Show(
+                            result.message,
+                            Base.Resources.Localizations.Messages.OOOps + " - " + Base.Resources.Localizations.Messages.Error,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error
+                        );
+                }
+            };
             var viewer = new DataLinkConflictsView(viewModel);
             viewer.ShowDialog();
         }

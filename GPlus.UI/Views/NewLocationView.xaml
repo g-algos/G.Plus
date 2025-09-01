@@ -43,8 +43,10 @@
 
                 <Label Content="{x:Static contents:Content.Name}" Grid.Column="0" Style="{StaticResource LabelMedium}"/>
                 <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
-                             Style="{StaticResource GTextBox}" 
-                             Grid.Column="1"/>
+                         Style="{StaticResource GTextBox}" 
+                         Grid.Column="1"
+                         PreviewTextInput="TextBox_PreviewTextInput"
+                         DataObject.Pasting="TextBox_Pasting"/>
             </Grid>
 
             <!-- Selection Panels -->

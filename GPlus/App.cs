@@ -74,6 +74,7 @@ namespace GPlus
 
             PushButtonData btn1 = new PushButtonData("ManageLinks", Base.Resources.Localizations.Content.ManageLinks, assemblyPath, typeof(Commands.ManageLinksCommand).FullName);
             btn1.LargeImage = new BitmapImage(new Uri("pack://application:,,,/GPlus;component/Resources/RibbonButtons/manageLinks_32.png"));
+            btn1.SetContextualHelp(new ContextualHelp(ContextualHelpType.Url,"https://g-algos.com/G.plus/DataLinks/"));
             //PushButtonData btn2 = new PushButtonData("DataSchemas", Base.Resources.Localizations.Content.DataSchemas, assemblyPath, typeof(Commands.DataSchemasCommand).FullName);
             //btn2.LargeImage = new BitmapImage(new Uri("pack://application:,,,/GPlus;component/Resources/RibbonButtons/GA.png"));
 
@@ -84,12 +85,16 @@ namespace GPlus
 
             PushButtonData btn3 = new PushButtonData("LocalizationSchemas", Base.Resources.Localizations.Content.LocationSchemas, assemblyPath, typeof(Commands.ManageLocationSchemasCommand).FullName);
             btn3.LargeImage = new BitmapImage(new Uri("pack://application:,,,/GPlus;component/Resources/RibbonButtons/localizations_32.png"));
+            btn3.SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://g-algos.com/G.plus/LocalizationSchemas/"));
+
             PushButtonData btn4 = new PushButtonData("ApplySchema", Base.Resources.Localizations.Content.ApplySchema, assemblyPath, typeof(Commands.ApplyLocationSchemaCommand).FullName);
             btn4.LargeImage = new BitmapImage(new Uri("pack://application:,,,/GPlus;component/Resources/RibbonButtons/applyLoc_32.png"));
             btn4.AvailabilityClassName = typeof(Helpers.Availability.ModelViewAvailability).FullName;
+            btn4.SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://g-algos.com/G.plus/LocalizationSchemas/#apply-scheme-to-view"));
             PushButtonData refreshLocalization = new PushButtonData("Refresh", Base.Resources.Localizations.Content.Refresh, assemblyPath, typeof(Commands.RefreshViewLocationSchemaCommand).FullName);
             refreshLocalization.LargeImage = new BitmapImage(new Uri("pack://application:,,,/GPlus;component/Resources/RibbonButtons/refreshLoc_32.png"));
             refreshLocalization.AvailabilityClassName = typeof(Helpers.Availability.LocalizationViewAvailability).FullName;
+            refreshLocalization.SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://g-algos.com/G.plus/LocalizationSchemas/#apply-scheme-to-view"));
 
             dataVisualizationPanel.AddItem(btn3);
             dataVisualizationPanel.AddItem(btn4);
@@ -99,11 +104,13 @@ namespace GPlus
 
             PushButtonData btn5 = new PushButtonData("About", Base.Resources.Localizations.Content.About, assemblyPath, typeof(Commands.AboutCommand).FullName);
             btn5.Image = new BitmapImage(new Uri("pack://application:,,,/GPlus;component/Resources/RibbonButtons/Galgo_16.png"));
+            btn5.SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://g-algos.com/G.plus/changelog/"));
             PushButtonData btn6 = new PushButtonData("TakeBreak", Base.Resources.Localizations.Content.TakeBreak, assemblyPath, typeof(Commands.TakeBreakCommand).FullName);
             btn6.Image = new BitmapImage(new Uri("pack://application:,,,/GPlus;component/Resources/RibbonButtons/takeABreak_16.png"));
+            btn6.SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://g-algos.com/G.plus/Intro/"));
             PushButtonData btn7 = new PushButtonData("PayMeCoffee", Base.Resources.Localizations.Content.PayMeCoffee, assemblyPath, typeof(Commands.PayMeCoffeeCommand).FullName);
             btn7.Image = new BitmapImage(new Uri("pack://application:,,,/GPlus;component/Resources/RibbonButtons/coffe_16.png"));
-
+            btn7.SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://g-algos.com/"));
 
             extraPanel.AddStackedItems(btn5, btn6, btn7);
             //PushButtonData btn8 = new PushButtonData("QuickTest", "QuickTest", assemblyPath, typeof(Commands.QuickCommand).FullName);

@@ -8,7 +8,7 @@
 		<Product>Gplus</Product>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Configurations>2023-Debug;2024-Debug;2025-Debug;2026-Debug;2023-Release;2024-Release;2025-Release;2026-Release</Configurations>
+		<Configurations>2025-Debug;2026-Debug;2025-Release;2026-Release</Configurations>
 		<PlatformTarget>AnyCPU</PlatformTarget>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<DebugType>full</DebugType>
@@ -100,11 +100,13 @@
   </ItemGroup>
 
 	<PropertyGroup Condition="$(Configuration.EndsWith('Debug'))">
-		<TargetPath>$(MSBuildProjectDirectory)\bin\$(Configuration)\GPlus.dll</TargetPath>	
+		<TargetPath>$(MSBuildProjectDirectory)\bin\$(Configuration)\GPlus.dll</TargetPath>
+		<AssemblyPath>$(TargetPath)</AssemblyPath>
 	</PropertyGroup>
 	<PropertyGroup Condition="$(Configuration.EndsWith('Release'))">
 		<TargetPath>$(PackageContentFolder)\GPlus.dll</TargetPath>
 		<OutputPath>$(PackageContentFolder)\</OutputPath>
+		<AssemblyPath>..\..\$(VersionTarget)\GPlus.dll</AssemblyPath>
 	</PropertyGroup>
 
 
@@ -115,7 +117,7 @@
 		</ReadLinesFromFile>
 
 		<ItemGroup>
-			<UpdatedAddin Include="@(AddinLines-&gt;Replace('@ASSEMBLY_PATH@', '$(TargetPath)'))" />
+			<UpdatedAddin Include="@(AddinLines-&gt;Replace('@ASSEMBLY_PATH@', '$(AssemblyPath)'))" />
 		</ItemGroup>
 
 		<WriteLinesToFile File="$(AddinFolder)\GPlus.addin" Lines="@(UpdatedAddin)" Overwrite="true" />

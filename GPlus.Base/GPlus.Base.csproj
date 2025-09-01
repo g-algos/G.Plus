@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>net8.0-windows</TargetFramework>
+      <ImplicitUsings>enable</ImplicitUsings>
+	  <UseWPF>true</UseWPF>
+	  <UseWindowsForms>true</UseWindowsForms>
+      <Nullable>enable</Nullable>
+	  <Configurations>2025-Debug;2026-Debug; 2025-Release;2026-Release</Configurations>
+	  <VersionTarget>$(Configuration.Substring(0, 4))</VersionTarget>
+	  <DefineConstants>$(DefineConstants);V$(VersionTarget)</DefineConstants>
+	  <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
+	  <Version>1.0.0</Version>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<Using Include="Autodesk.Revit.DB" />
+		<Using Include="Autodesk.Revit.UI" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="EPPlus" Version="8.0.5" />
+		<PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(VersionTarget).*" />
+		<PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(VersionTarget).*" />
+		<PackageReference Include="Npgsql" Version="9.0.3" />
+		<PackageReference Include="System.Drawing.Common" Version="8.0.0" PrivateAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Resources\Identifiers.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Identifiers.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="Resources\Localizations\Content.Designer.cs">
+	    <DependentUpon>Content.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Resources\Localizations\Messages.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Messages.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Identifiers.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Identifiers.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Localizations\Content.resx">
+	    <LastGenOutput>Content.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Localizations\Messages.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="db.config">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+</Project>
