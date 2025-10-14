@@ -55,6 +55,14 @@
 	
 	
 	<ItemGroup>
+	  <Reference Include="G.DB">
+	    <HintPath>..\..\G.DB\bin\Release\net8.0\G.DB.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+	
+	
+	
+	<ItemGroup>
 	  <Resource Include="Resources\RibbonButtons\applyLoc_32.png">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Resource>

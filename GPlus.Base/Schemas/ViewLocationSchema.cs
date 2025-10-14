@@ -39,7 +39,7 @@ namespace GPlus.Base.Schemas
             var doc = view.Document;
             var collector = new FilteredElementCollector(doc, view.Id)
                 .WhereElementIsNotElementType()
-                .Where(e=> e.Category.CategoryType == CategoryType.Model && e.Category.IsCuttable && e.Category.IsVisibleInUI && e.Category.AllowsBoundParameters)
+                .Where(e=> e.Category != null && e.Category.CategoryType == CategoryType.Model && e.Category.IsCuttable && e.Category.IsVisibleInUI && e.Category.AllowsBoundParameters)
                 .Select(e=> e.Id);
 
             foreach (var id in collector)

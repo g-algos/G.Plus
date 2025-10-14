@@ -33,14 +33,14 @@ namespace GPlus.Base.Schemas
         //Use to create
         public LocationSchema(ProjectInfo project, string name, List<ElementId> categories, ElementId parameter, bool byValue, bool includeLinks, int step)
         {
-            Name = name;
+            Name = name.Replace(" ", "_");
             Categories = categories;
             Parameter = parameter;
             IncludeLinks = includeLinks;
             ByValue = byValue;
             Step = step;
             Valid = project.Document.ValidParameter(parameter);
-            Schema schema = SchemaManager.CreateSchema(Id, name.Replace(" ","_"), new Dictionary<string, Type>
+            Schema schema = SchemaManager.CreateSchema(Id, name, new Dictionary<string, Type>
                 {
                     { nameof(Categories), Categories.GetType() },
                     { nameof(Parameter), Parameter.GetType() },
