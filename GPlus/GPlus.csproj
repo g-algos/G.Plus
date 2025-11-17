@@ -15,7 +15,7 @@
 		<DebugSymbols>true</DebugSymbols>
 		<Optimize>false</Optimize>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-		<Version>1.0.0</Version>
+		<Version>2.0.0</Version>
 	</PropertyGroup>						
 	
 	<!--Custom Variables-->
@@ -38,7 +38,9 @@
 	  <None Remove="Resources\Loc_32.svg" />
 	  <None Remove="Resources\manageLinks_32.svg" />
 	  <None Remove="Resources\refresh_loc_32.svg" />
+	  <None Remove="Resources\StartVersion_32.svg" />
 	  <None Remove="Resources\takeABreak_32.svg" />
+	  <None Remove="Resources\Versioning_32.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -50,17 +52,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\GPlus.Base\GPlus.Base.csproj" />
 	  <ProjectReference Include="..\GPlus.UI\GPlus.UI.csproj" />
-	</ItemGroup>
-	
-	
-	
-	<ItemGroup>
-	  <Reference Include="G.DB">
-	    <HintPath>..\..\G.DB\bin\Release\net8.0\G.DB.dll</HintPath>
-	  </Reference>
-	</ItemGroup>
-	
-	
+	</ItemGroup>	
 	
 	<ItemGroup>
 	  <Resource Include="Resources\RibbonButtons\applyLoc_32.png">
@@ -91,11 +83,23 @@
 	  <Resource Include="Resources\RibbonButtons\refreshLoc_32.png">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Resource>
+	  <Resource Include="Resources\RibbonButtons\start_versioning_32.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
 	</ItemGroup>
 	<ItemGroup>
 	  <Resource Include="Resources\RibbonButtons\takeABreak_16.png">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Resource>
+	  <Resource Include="Resources\RibbonButtons\versioning_32.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+		<Resource Include="Resources\RibbonButtons\start_versioning_32.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
+		<Content Include="Resources\VersioningReportTemplate.xlsx">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup> 
 
 

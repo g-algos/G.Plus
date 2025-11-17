@@ -317,4 +317,54 @@ Pour les ajouter en tant que paramètres partagés, spécifiez leur type et proc
   <data name="DeleteSchema" xml:space="preserve">
     <value>Supprimer schéma de repérage</value>
   </data>
+  <data name="ElementId" xml:space="preserve">
+    <value>ElementId</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Catégorie</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Niveau</value>
+  </data>
+  <data name="ElementAction" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="DocumentVersion" xml:space="preserve">
+    <value>Version du document</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>Fichier actuel</value>
+  </data>
+  <data name="PreviousVersion" xml:space="preserve">
+    <value>Fichier précédent</value>
+  </data>
+  <data name="FileVersioning" xml:space="preserve">
+    <value>Versionnage</value>
+  </data>
+  <data name="VersionHistory" xml:space="preserve">
+    <value>Historique
+des Versions</value>
+  </data>
+  <data name="VersioningToolTip" xml:space="preserve">
+    <value>Identifie les différences entre le document actuel et une version précédente.</value>
+  </data>
+  <data name="SaveVersion" xml:space="preserve">
+    <value>Enregistrer
+la Version</value>
+  </data>
+  <data name="SaveVersionToolip" xml:space="preserve">
+    <value>Enregistre l’état actuel du document comme une nouvelle version du modèle.</value>
+  </data>
+  <data name="Saved" xml:space="preserve">
+    <value>enregistré</value>
+  </data>
+  <data name="Synchronized" xml:space="preserve">
+    <value>Synchronisé</value>
+  </data>
+  <data name="ExportReport" xml:space="preserve">
+    <value>Exporter rapport</value>
+  </data>
+  <data name="Visualize" xml:space="preserve">
+    <value>Visualizer</value>
+  </data>
 </root>

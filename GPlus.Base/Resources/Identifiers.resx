@@ -125,6 +125,10 @@
     <value>12AE6783-045E-4888-87E7-A4C80B85B37A</value>
     <comment>Guid</comment>
   </data>
+  <data name="VersioningSchema" xml:space="preserve">
+    <value>31389936-85b7-43ec-94e6-c63adc9afe3f</value>
+    <comment>Guid</comment>
+  </data>
   <data name="ViewLocalizationLinkSchema" xml:space="preserve">
     <value>469407F7-54AA-4E0B-BAD8-65D6A557CB1D</value>
     <comment>Guid</comment>

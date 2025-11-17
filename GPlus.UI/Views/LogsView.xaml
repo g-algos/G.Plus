@@ -1,0 +1,111 @@
+﻿<Window x:Class="GPlus.UI.Views.LogsView"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:local="clr-namespace:GPlus.UI.Views"
+         xmlns:converters="clr-namespace:GPlus.UI.Helpers.Converters"
+         xmlns:commands="clr-namespace:G.wpf.Commands;assembly=G.wpf"
+         xmlns:controls="clr-namespace:G.wpf.Controls;assembly=G.wpf"
+         xmlns:contents="clr-namespace:GPlus.Base.Resources.Localizations;assembly=GPlus.Base"  
+         xmlns:enums="clr-namespace:GPlus.Base.Enums;assembly=GPlus.Base" 
+         mc:Ignorable="d"
+         Title="{x:Static contents:Content.DocumentVersion}" Height="450" Width="800" ResizeMode="CanResize"
+         WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/G.wpf;component/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <converters:ActionToBrushConverter  x:Key="ActionToBrush" />
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="24"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="{StaticResource PaddingXS}" Orientation="Horizontal">
+            <Label Margin="{StaticResource PaddingXS}" Content="{x:Static contents:Content.CurrentVersion}" Style="{StaticResource LabelMedium}"/>
+            <TextBox Width="Auto" MinWidth="200"
+                Style="{StaticResource GTextBox}"
+                Text="{Binding CurrentDocument}"
+                Margin="{StaticResource PaddingHorizontal}"
+                IsReadOnly="True"/>
+            <Label Margin="{StaticResource PaddingXS}" Content="{x:Static contents:Content.Version}" Style="{StaticResource LabelMedium}"/>
+            <ComboBox Margin="{StaticResource PaddingHorizontal}" Width="60" 
+              Style="{StaticResource GComboBox}" 
+              ItemsSource="{Binding Versions}"
+              SelectedItem="{Binding SelectedVersion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+              DisplayMemberPath="Name"/>
+        </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid Grid.Column="0" Style="{StaticResource GStaticDataGrid}" 
+             ItemsSource="{Binding Logs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  
+             VerticalScrollBarVisibility="Auto"
+             HorizontalScrollBarVisibility="Hidden"
+             ScrollViewer.CanContentScroll="True"
+             Margin="{StaticResource PaddingXS}"
+             Background="{StaticResource GreyBrush}">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Action}" 
+                             Value="{x:Static enums:ElementAction.Created}">
+                                <Setter Property="Background" Value="LightGreen"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Action}" 
+                             Value="{x:Static enums:ElementAction.Deleted}">
+                                <Setter Property="Background" Value="Salmon"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                <DataGridTextColumn Header="{x:Static contents:Content.ElementId}" Width="Auto" Binding="{Binding ElementId}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="{x:Static contents:Content.Name}" Width="*" Binding="{Binding Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="{x:Static contents:Content.Category}" Width="*" Binding="{Binding Category}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="{x:Static contents:Content.Level}" Width="*" Binding="{Binding Level}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+            <StackPanel Grid.Column="1" Margin="{StaticResource PaddingXS}" Orientation="Vertical">
+                <Button Name="view" Style="{StaticResource SecondaryButtonSM}" Margin="{StaticResource PaddingXS}"
+                     Command="{Binding ViewCommand}"
+                     ToolTip="{x:Static contents:Content.Visualize}">
+                    <Image Source="{StaticResource View3D}" Width="16" Height="16"/>
+                </Button>
+                <Button Name="export" Style="{StaticResource SecondaryButtonSM}" Margin="{StaticResource PaddingXS}" 
+                     Command="{Binding ExportCommand}" 
+                     ToolTip="{x:Static contents:Content.ExportReport}">
+                    <Image Source="{StaticResource Push24}" Width="16" Height="16"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <!-- Footer -->
+        <Grid DockPanel.Dock="Bottom" Margin="{StaticResource PaddingSM}" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" VerticalAlignment="Center">
+                <Hyperlink Style="{StaticResource LinkLarge}"
+                    Command="{x:Static commands:GlobalCommands.OpenUriCommand}" 
+                    CommandParameter="http://g-algos.com/G.plus/DataLinks/#selective-merge">
+                    Learn more
+                </Hyperlink>
+            </TextBlock>
+        </Grid>
+    </Grid>
+</Window>

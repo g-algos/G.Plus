@@ -144,6 +144,15 @@ namespace GPlus.Base.Resources.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category.
+        /// </summary>
+        public static string Category {
+            get {
+                return ResourceManager.GetString("Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Color.
         /// </summary>
         public static string Color {
@@ -167,6 +176,15 @@ namespace GPlus.Base.Resources.Localizations {
         public static string Contact {
             get {
                 return ResourceManager.GetString("Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current document.
+        /// </summary>
+        public static string CurrentVersion {
+            get {
+                return ResourceManager.GetString("CurrentVersion", resourceCulture);
             }
         }
         
@@ -217,6 +235,15 @@ namespace GPlus.Base.Resources.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  Document version.
+        /// </summary>
+        public static string DocumentVersion {
+            get {
+                return ResourceManager.GetString("DocumentVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DONATE.
         /// </summary>
         public static string Donate {
@@ -226,11 +253,47 @@ namespace GPlus.Base.Resources.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string ElementAction {
+            get {
+                return ResourceManager.GetString("ElementAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ElementId.
+        /// </summary>
+        public static string ElementId {
+            get {
+                return ResourceManager.GetString("ElementId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export report.
+        /// </summary>
+        public static string ExportReport {
+            get {
+                return ResourceManager.GetString("ExportReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ....
         /// </summary>
         public static string Extra {
             get {
                 return ResourceManager.GetString("Extra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Versioning.
+        /// </summary>
+        public static string FileVersioning {
+            get {
+                return ResourceManager.GetString("FileVersioning", resourceCulture);
             }
         }
         
@@ -285,6 +348,15 @@ namespace GPlus.Base.Resources.Localizations {
         public static string LearnMore {
             get {
                 return ResourceManager.GetString("LearnMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Level.
+        /// </summary>
+        public static string Level {
+            get {
+                return ResourceManager.GetString("Level", resourceCulture);
             }
         }
         
@@ -447,6 +519,15 @@ namespace GPlus.Base.Resources.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Previous document.
+        /// </summary>
+        public static string PreviousVersion {
+            get {
+                return ResourceManager.GetString("PreviousVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product.
         /// </summary>
         public static string Product {
@@ -506,6 +587,34 @@ namespace GPlus.Base.Resources.Localizations {
         public static string Remove {
             get {
                 return ResourceManager.GetString("Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to saved.
+        /// </summary>
+        public static string Saved {
+            get {
+                return ResourceManager.GetString("Saved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save
+        ///Version.
+        /// </summary>
+        public static string SaveVersion {
+            get {
+                return ResourceManager.GetString("SaveVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saves the current state of the document as a new version of the model..
+        /// </summary>
+        public static string SaveVersionToolip {
+            get {
+                return ResourceManager.GetString("SaveVersionToolip", resourceCulture);
             }
         }
         
@@ -582,6 +691,15 @@ namespace GPlus.Base.Resources.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to synchronized.
+        /// </summary>
+        public static string Synchronized {
+            get {
+                return ResourceManager.GetString("Synchronized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Take a break!.
         /// </summary>
         public static string TakeABreak {
@@ -643,6 +761,34 @@ namespace GPlus.Base.Resources.Localizations {
         public static string Version {
             get {
                 return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version
+        ///Vistory.
+        /// </summary>
+        public static string VersionHistory {
+            get {
+                return ResourceManager.GetString("VersionHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Identifies the differences between the current document and a previous version..
+        /// </summary>
+        public static string VersioningToolTip {
+            get {
+                return ResourceManager.GetString("VersioningToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visualize.
+        /// </summary>
+        public static string Visualize {
+            get {
+                return ResourceManager.GetString("Visualize", resourceCulture);
             }
         }
     }

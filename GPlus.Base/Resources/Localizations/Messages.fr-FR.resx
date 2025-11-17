@@ -148,8 +148,20 @@
   <data name="NoLocalizations" xml:space="preserve">
     <value>Aucun schéma de repérage disponible. Veuillez créer un schéma de repérage pour continuer.</value>
   </data>
+  <data name="NoOpenDocuments" xml:space="preserve">
+    <value>Veuillez ouvrir la version précédente du document actuel.</value>
+  </data>
+  <data name="NoPreviousVersions" xml:space="preserve">
+    <value>Aucune version précédente n’a été enregistrée pour ce document.</value>
+  </data>
   <data name="NoSchedule" xml:space="preserve">
     <value>Le nom de la comenclature ne peut pas être vide.</value>
+  </data>
+  <data name="NoVersionChanges" xml:space="preserve">
+    <value>Aucun changement n’a été détecté entre les deux documents.</value>
+  </data>
+  <data name="NoView3dTemplate" xml:space="preserve">
+    <value>Aucun gabarit de vue 3D valide n’a été trouvé dans ce document.</value>
   </data>
   <data name="OnlyStrings" xml:space="preserve">
     <value>La valeur doit contenir uniquement des lettres.</value>
@@ -162,6 +174,12 @@
   </data>
   <data name="PushFailed" xml:space="preserve">
     <value>Échec de l'envoi</value>
+  </data>
+  <data name="SaveSync" xml:space="preserve">
+    <value>Si vous continuez, ce fichier sera {0}.</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Succès</value>
   </data>
   <data name="Wait" xml:space="preserve">
     <value>Attendez !!!</value>

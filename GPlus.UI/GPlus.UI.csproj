@@ -19,11 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="G.WPF" Version="1.0.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\G.wpf\G.wpf.csproj" />
     <ProjectReference Include="..\GPlus.Base\GPlus.Base.csproj" />
   </ItemGroup>
 	<ItemGroup>
@@ -33,6 +33,12 @@
 
   <ItemGroup>
     <Resource Include="Resources\PayMeACoffe.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\SelectDocumentView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 	
 </Project>

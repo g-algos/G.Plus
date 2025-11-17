@@ -383,4 +383,68 @@ To add them as shared parameters, specify their type and proceed.</value>
     <value>Delete schema</value>
     <comment>Label</comment>
   </data>
+  <data name="ElementId" xml:space="preserve">
+    <value>ElementId</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Level</value>
+    <comment>Label</comment>
+  </data>
+  <data name="ElementAction" xml:space="preserve">
+    <value>Action</value>
+    <comment>Label</comment>
+  </data>
+  <data name="DocumentVersion" xml:space="preserve">
+    <value> Document version</value>
+    <comment>Label</comment>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>Current document</value>
+    <comment>Label</comment>
+  </data>
+  <data name="PreviousVersion" xml:space="preserve">
+    <value>Previous document</value>
+    <comment>Label</comment>
+  </data>
+  <data name="FileVersioning" xml:space="preserve">
+    <value>Versioning</value>
+    <comment>Label</comment>
+  </data>
+  <data name="VersionHistory" xml:space="preserve">
+    <value>Version
+Vistory</value>
+    <comment>Button</comment>
+  </data>
+  <data name="VersioningToolTip" xml:space="preserve">
+    <value>Identifies the differences between the current document and a previous version.</value>
+    <comment>Tool tip</comment>
+  </data>
+  <data name="SaveVersion" xml:space="preserve">
+    <value>Save
+Version</value>
+    <comment>Button</comment>
+  </data>
+  <data name="SaveVersionToolip" xml:space="preserve">
+    <value>Saves the current state of the document as a new version of the model.</value>
+    <comment>Toll Tip</comment>
+  </data>
+  <data name="Saved" xml:space="preserve">
+    <value>saved</value>
+  </data>
+  <data name="Synchronized" xml:space="preserve">
+    <value>synchronized</value>
+  </data>
+  <data name="ExportReport" xml:space="preserve">
+    <value>Export report</value>
+    <comment>Label</comment>
+  </data>
+  <data name="Visualize" xml:space="preserve">
+    <value>Visualize</value>
+    <comment>Label</comment>
+  </data>
 </root>
