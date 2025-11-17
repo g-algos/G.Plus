@@ -157,8 +157,24 @@
     <value>No localization schemes available. Please create a localization scheme to proceed.</value>
     <comment>warning</comment>
   </data>
+  <data name="NoOpenDocuments" xml:space="preserve">
+    <value>Please open the previous version of the current document.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NoPreviousVersions" xml:space="preserve">
+    <value>No previous versions were stored for the current document.</value>
+    <comment>Message</comment>
+  </data>
   <data name="NoSchedule" xml:space="preserve">
     <value>Schedule name cannot be empty.</value>
+  </data>
+  <data name="NoVersionChanges" xml:space="preserve">
+    <value>No changes were detected between the two documents.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="NoView3dTemplate" xml:space="preserve">
+    <value>No valid 3D view template was found in this document.</value>
+    <comment>Error</comment>
   </data>
   <data name="OnlyStrings" xml:space="preserve">
     <value>The value must contain only letters.</value>
@@ -175,6 +191,14 @@
   <data name="PushFailed" xml:space="preserve">
     <value>Push Failed</value>
     <comment>Error</comment>
+  </data>
+  <data name="SaveSync" xml:space="preserve">
+    <value>If you proceed, this file will be {0}.</value>
+    <comment>Message</comment>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+    <comment>title</comment>
   </data>
   <data name="Wait" xml:space="preserve">
     <value>Wait!!!</value>

@@ -22,7 +22,7 @@ namespace GPlus.Base.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Identifiers {
+    public class Identifiers {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace GPlus.Base.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GPlus.Base.Resources.Identifiers", typeof(Identifiers).Assembly);
@@ -51,7 +51,7 @@ namespace GPlus.Base.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace GPlus.Base.Resources {
         /// <summary>
         ///   Looks up a localized string similar to D7C1BB0C-CAD7-4E40-B700-C8C45056DF9C.
         /// </summary>
-        internal static string DataLinkScema {
+        public static string DataLinkScema {
             get {
                 return ResourceManager.GetString("DataLinkScema", resourceCulture);
             }
@@ -72,16 +72,25 @@ namespace GPlus.Base.Resources {
         /// <summary>
         ///   Looks up a localized string similar to 12AE6783-045E-4888-87E7-A4C80B85B37A.
         /// </summary>
-        internal static string ProjectLocalizationsSchema {
+        public static string ProjectLocalizationsSchema {
             get {
                 return ResourceManager.GetString("ProjectLocalizationsSchema", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 31389936-85b7-43ec-94e6-c63adc9afe3f.
+        /// </summary>
+        public static string VersioningSchema {
+            get {
+                return ResourceManager.GetString("VersioningSchema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 469407F7-54AA-4E0B-BAD8-65D6A557CB1D.
         /// </summary>
-        internal static string ViewLocalizationLinkSchema {
+        public static string ViewLocalizationLinkSchema {
             get {
                 return ResourceManager.GetString("ViewLocalizationLinkSchema", resourceCulture);
             }

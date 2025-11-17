@@ -19,7 +19,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="ClosedXML.Report" Version="0.2.12" />
 		<PackageReference Include="EPPlus" Version="8.0.5" />
+		<PackageReference Include="Nice3point.Revit.Api.AdWindows" Version="$(VersionTarget).*" />
 		<PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(VersionTarget).*" />
 		<PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(VersionTarget).*" />
 		<PackageReference Include="Npgsql" Version="9.0.3" />
@@ -46,7 +48,7 @@
 
 	<ItemGroup>
 	  <EmbeddedResource Update="Resources\Identifiers.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Identifiers.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Localizations\Content.resx">

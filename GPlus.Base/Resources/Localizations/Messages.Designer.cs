@@ -151,11 +151,47 @@ namespace GPlus.Base.Resources.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please open the previous version of the current document..
+        /// </summary>
+        public static string NoOpenDocuments {
+            get {
+                return ResourceManager.GetString("NoOpenDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No previous versions were stored for the current document..
+        /// </summary>
+        public static string NoPreviousVersions {
+            get {
+                return ResourceManager.GetString("NoPreviousVersions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Schedule name cannot be empty..
         /// </summary>
         public static string NoSchedule {
             get {
                 return ResourceManager.GetString("NoSchedule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No changes were detected between the two documents..
+        /// </summary>
+        public static string NoVersionChanges {
+            get {
+                return ResourceManager.GetString("NoVersionChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No valid 3D view template was found in this document..
+        /// </summary>
+        public static string NoView3dTemplate {
+            get {
+                return ResourceManager.GetString("NoView3dTemplate", resourceCulture);
             }
         }
         
@@ -192,6 +228,24 @@ namespace GPlus.Base.Resources.Localizations {
         public static string PushFailed {
             get {
                 return ResourceManager.GetString("PushFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you proceed, this file will be {0}..
+        /// </summary>
+        public static string SaveSync {
+            get {
+                return ResourceManager.GetString("SaveSync", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success.
+        /// </summary>
+        public static string Success {
+            get {
+                return ResourceManager.GetString("Success", resourceCulture);
             }
         }
         
