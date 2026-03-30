@@ -163,12 +163,17 @@ namespace GPlus.Commands
         }
         private static (bool result, string message) RemoveSchema(LocalizationVM vm, ProjectInfo project, ManageLocationSchemasVM viewModel)
         {
+            var schema = Schema.Lookup(vm.Id);
+            var entity = project.GetEntity(schema);
+            if (entity == null || !entity.IsValid())
+            {
+                return (true, string.Empty);
+            }
             using (SubTransaction transaction = new SubTransaction(ActiveCommandModel.Document))
             {
                 try
                 {
                     transaction.Start();
-                    var schema = Schema.Lookup(vm.Id);
                     var projectInfo = project;
                     projectInfo.DeleteEntity(schema);
 

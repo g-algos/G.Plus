@@ -142,7 +142,4 @@
 		<MakeDir Directories="$(PackageContentFolder)" />
 		<Copy SourceFiles="Manifest/PackageContents.xml" DestinationFolder="$(PackageFolder)" />
 	</Target>
-	<Target Name="SignDLL" AfterTargets="Build">
-		<Exec Command="&quot;C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x64\signtool.exe&quot; sign /f &quot;$(ProjectDir)gplus_cert.pfx&quot; /p Bill@2017 /tr http://timestamp.digicert.com /td sha256 /fd sha256 &quot;$(TargetPath)&quot;" />
-	</Target>
 </Project>

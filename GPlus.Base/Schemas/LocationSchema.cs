@@ -114,7 +114,6 @@ namespace GPlus.Base.Schemas
                 alreadyExists = alreadyExists.SelectMany(alreadyExists => alreadyExists.Split(':'))
                                              .ToHashSet(StringComparer.OrdinalIgnoreCase);
             }
-            HashSet<string> allValues = new HashSet<string>();
             HashSet<string> values = new HashSet<string>();
             List<Document> docSet = new List<Document>();
 
@@ -128,18 +127,14 @@ namespace GPlus.Base.Schemas
             docSet.Add(doc);
             foreach (var document in docSet)
             {
-                var collector = new FilteredElementCollector(document);
                 foreach (var category in Categories)
                 {
-                    foreach (var v in collector
+                    foreach (var v in new FilteredElementCollector(document)
                         .OfCategoryId(category)
                         .ToElements()
                         .Select(e => e.GetParameter(Parameter)?.GetValue()?.ToString())
                         .Where(v => v != null))
                     {
-                        allValues.Add(v!);
-                        if(alreadyExists.Contains(v!))
-                            continue;
                         values.Add(v!);
                     }
                 }
@@ -167,7 +162,7 @@ namespace GPlus.Base.Schemas
             }
             else
             {
-                List<double> doubleValues = allValues.Select(e=> double.Parse(e)).ToList();
+                List<double> doubleValues = values.Select(double.Parse).ToList();
                 var min =Math.Min(0, doubleValues.Min());
                 var max = doubleValues.Max();
 
@@ -196,7 +191,7 @@ namespace GPlus.Base.Schemas
             {
                 foreach (var item in Items)
                 {
-                    if (!allValues.Contains(item.Value))
+                    if (!values.Contains(item.Value))
                         _items.Remove(JsonSerializer.Serialize(item));
                 }
             }
