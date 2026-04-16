@@ -447,4 +447,13 @@ Version</value>
     <value>Visualize</value>
     <comment>Label</comment>
   </data>
+  <data name="MajorVersion" xml:space="preserve">
+    <value>Major version</value>
+  </data>
+  <data name="MinorVersion" xml:space="preserve">
+    <value>Minor version</value>
+  </data>
+  <data name="NewVersion" xml:space="preserve">
+    <value>New version</value>
+  </data>
 </root>

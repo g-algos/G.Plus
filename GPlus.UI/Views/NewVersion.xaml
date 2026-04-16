@@ -1,0 +1,59 @@
+﻿<Window x:Class="GPlus.UI.Views.NewVersion"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:local="clr-namespace:GPlus.UI.Views"
+         xmlns:converters="clr-namespace:GPlus.UI.Helpers.Converters"
+         xmlns:commands="clr-namespace:G.wpf.Commands;assembly=G.wpf"
+         xmlns:controls="clr-namespace:G.wpf.Controls;assembly=G.wpf"
+         xmlns:contents="clr-namespace:GPlus.Base.Resources.Localizations;assembly=GPlus.Base"  
+         xmlns:enums="clr-namespace:GPlus.Base.Enums;assembly=GPlus.Base" 
+         mc:Ignorable="d"
+         Title="{x:Static contents:Content.NewVersion}" Height="180" Width="250" ResizeMode="CanResize"
+         WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/G.wpf;component/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <converters:ActionToBrushConverter  x:Key="ActionToBrush" />
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Margin="{StaticResource PaddingXS}" Orientation="Horizontal">
+            <Label Margin="{StaticResource PaddingXS}" Content="{x:Static contents:Content.DocumentVersion}" Style="{StaticResource LabelMedium}"/>
+            <TextBox Width="Auto" MinWidth="80"
+                     Style="{StaticResource GTextBox}"
+                     Text="{Binding CurrentVersion}"
+                     Margin="{StaticResource PaddingHorizontal}"
+                     IsReadOnly="True"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="{StaticResource PaddingXS}" VerticalAlignment="Center">
+            <RadioButton Content="{x:Static contents:Content.MajorVersion}" IsChecked="{Binding IsMajor}" Style="{StaticResource LabelMedium}" Margin="{StaticResource PaddingXS}"/>
+            <RadioButton Content="{x:Static contents:Content.MinorVersion}"  Style="{StaticResource LabelMedium}" Margin="{StaticResource PaddingXS}" />
+        </StackPanel>
+
+        <!-- Footer -->
+        <Grid DockPanel.Dock="Bottom" Margin="{StaticResource PaddingSM}" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" VerticalAlignment="Center">
+                <Hyperlink Style="{StaticResource LinkLarge}" Command="{x:Static commands:GlobalCommands.OpenUriCommand}" CommandParameter="https://g-algos.com/G.plus/FileVersioning/">
+                    Learn more
+                </Hyperlink>
+            </TextBlock>
+            <Button Grid.Column="1" Content="OK" IsDefault="True" Style="{StaticResource PrimaryButton}" Command="{Binding CloseCommand}"/>
+
+        </Grid>
+        </Grid>
+</Window>

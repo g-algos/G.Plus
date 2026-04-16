@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using DataGrid = System.Windows.Controls.DataGrid;
 
 
 namespace GPlus.UI.Views

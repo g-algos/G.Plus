@@ -1,35 +1,58 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0-windows</TargetFramework>
 		<OutputType>Library</OutputType>
 		<UseWPF>true</UseWPF>
 		<EnableWindowsTargeting>true</EnableWindowsTargeting>
 		<Product>Gplus</Product>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Configurations>2025-Debug;2026-Debug;2025-Release;2026-Release</Configurations>
+		<Configurations>2025-Debug;2026-Debug;2025-Release;2026-Release;2027-Debug;2027-Release</Configurations>
+		<VersionTarget>$(Configuration.Substring(0, 4))</VersionTarget>
 		<PlatformTarget>AnyCPU</PlatformTarget>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<DebugType>full</DebugType>
 		<DebugSymbols>true</DebugSymbols>
-		<Optimize>false</Optimize>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<Version>2.0.1</Version>
-	</PropertyGroup>						
-	
+	</PropertyGroup>
+		<Choose>
+		<When Condition="$(VersionTarget) &lt; 2027">
+			<PropertyGroup>
+				<TargetFramework>net8.0-windows</TargetFramework>
+			</PropertyGroup>
+		</When>
+		<Otherwise>
+			<PropertyGroup>
+				<TargetFramework>net10.0-windows</TargetFramework>
+			</PropertyGroup>
+		</Otherwise>
+	</Choose>
 	<!--Custom Variables-->
 	<PropertyGroup>
-		<VersionTarget>$(Configuration.Substring(0, 4))</VersionTarget>
+		<IsDebugConfig>$([System.String]::Copy('$(Configuration)').EndsWith('Debug'))</IsDebugConfig>
+		<VersionTarget>$([System.String]::Copy('$(Configuration)').Substring(0, 4))</VersionTarget>
 		<DefineConstants>$(DefineConstants);V$(VersionTarget)</DefineConstants>
 		<PackageFolder>$(AppData)\Autodesk\ApplicationPlugins\$(Product).bundle\</PackageFolder>
 		<PackageContentFolder>$(AppData)\Autodesk\ApplicationPlugins\$(Product).bundle\Contents\$(VersionTarget)</PackageContentFolder>
-		<AddinFolder>$(AppData)\Autodesk\Revit\Addins\$(VersionTarget)</AddinFolder>
-	</PropertyGroup>
-
-	<PropertyGroup>
 		<ReleaseDate>$([System.DateTime]::Now.ToString("dd-MM-yyyy"))</ReleaseDate>
 	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(IsDebugConfig)' == 'True'">
+		<AddinFolder>$(AppData)\Autodesk\Revit\Addins\$(VersionTarget)</AddinFolder>
+		<DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+		<OutputPath>$(MSBuildProjectDirectory)\bin\$(Configuration)\</OutputPath>
+		<AssemblyPath>$(OutputPath)GPlus.dll</AssemblyPath>
+		<Optimize>false</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(IsDebugConfig)' == 'False'">
+		<AddinFolder>$(AppData)\Autodesk\ApplicationPlugins\$(Product).bundle\Contents\Addins\$(VersionTarget)</AddinFolder>
+		<OutputPath>$(PackageContentFolder)\</OutputPath>
+		<AssemblyPath>..\..\$(VersionTarget)\GPlus.dll</AssemblyPath>
+		<Optimize>true</Optimize>
+	</PropertyGroup>
+
 
 	<ItemGroup>
 	  <None Remove="Resources\applyLoc_32.svg" />
@@ -46,7 +69,6 @@
 	<ItemGroup>
 		<AssemblyMetadata Include="ReleaseDate" Value="$(ReleaseDate)" />
 	</ItemGroup>
-	
 	
 	
 	<ItemGroup>
@@ -111,33 +133,27 @@
 	<Using Include="GPlus.UI.Views" />
   </ItemGroup>
 
-	<PropertyGroup Condition="$(Configuration.EndsWith('Debug'))">
-		<TargetPath>$(MSBuildProjectDirectory)\bin\$(Configuration)\GPlus.dll</TargetPath>
-		<AssemblyPath>$(TargetPath)</AssemblyPath>
-	</PropertyGroup>
-	<PropertyGroup Condition="$(Configuration.EndsWith('Release'))">
-		<TargetPath>$(PackageContentFolder)\GPlus.dll</TargetPath>
-		<OutputPath>$(PackageContentFolder)\</OutputPath>
-		<AssemblyPath>..\..\$(VersionTarget)\GPlus.dll</AssemblyPath>
-	</PropertyGroup>
-
-
+	
 	<!--GenerateAddin-->
+
 	<Target Name="GenerateAddinFile" AfterTargets="Build">
-		<ReadLinesFromFile File="Manifest/GPlus.addin.template">
-			<Output TaskParameter="Lines" ItemName="AddinLines" />
-		</ReadLinesFromFile>
+	<MakeDir Directories="$(AddinFolder)" />
 
-		<ItemGroup>
-			<UpdatedAddin Include="@(AddinLines-&gt;Replace('@ASSEMBLY_PATH@', '$(AssemblyPath)'))" />
-		</ItemGroup>
+	<ReadLinesFromFile File="Manifest/GPlus.addin.template">
+		<Output TaskParameter="Lines" ItemName="AddinLines" />
+	</ReadLinesFromFile>
 
-		<WriteLinesToFile File="$(AddinFolder)\GPlus.addin" Lines="@(UpdatedAddin)" Overwrite="true" />
+	<ItemGroup>
+		<UpdatedAddin Include="@(AddinLines-&gt;Replace('@ASSEMBLY_PATH@', '$(AssemblyPath)'))" />
+	</ItemGroup>
+
+	<WriteLinesToFile File="$(AddinFolder)\GPlus.addin" Lines="@(UpdatedAddin)" Overwrite="true" />
 	</Target>
+	
 
 	<!--Generate bunlde-->
-	<Target Name="CopyToOutput" AfterTargets="Build" Condition="$(Configuration.EndsWith('Release'))">
-		<Message Text="Copying files to $(TargetPath)" Importance="high" />
+	<Target Name="CopyToOutput" AfterTargets="Build" Condition="'$(IsDebugConfig)' == 'False'">
+		<Message Text="Copying files to $(OutputPath)" Importance="high" />
 		<Message Text="Copying files to $(PackageContentFolder)" Importance="high" />
 		<MakeDir Directories="$(PackageContentFolder)" />
 		<Copy SourceFiles="Manifest/PackageContents.xml" DestinationFolder="$(PackageFolder)" />

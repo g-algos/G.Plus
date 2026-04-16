@@ -25,10 +25,6 @@ public class StartNewVersionRecordCommand : IExternalCommand
 
             taskDialog.CommonButtons = TaskDialogCommonButtons.Ok | TaskDialogCommonButtons.Cancel;
 
-            var result = taskDialog.Show();
-            if (result == TaskDialogResult.Cancel)
-                return Result.Cancelled;
-
             if (ActiveCommandModel.Document.IsWorkshared)
                 ActiveCommandModel.Document.SynchronizeWithCentral(new TransactWithCentralOptions(), new SynchronizeWithCentralOptions() { SaveLocalAfter = true });
             else
@@ -47,7 +43,22 @@ public class StartNewVersionRecordCommand : IExternalCommand
                         var lastVersion = versions.OrderByDescending(e => e.Order).FirstOrDefault();
                         if (lastVersion != null && lastVersion.VersionGuid == Document.GetDocumentVersion(ActiveCommandModel.Document).VersionGUID)
                             return Result.Succeeded;
-                        VersioningSchema.StartNewVersion(ActiveCommandModel.Document);
+                        NewVersionVM viewModel = new NewVersionVM(lastVersion!.Order);
+            
+                        var window = new NewVersion(viewModel);
+                        var ok = window.ShowDialog();
+                        if(ok != true)
+                        {
+                            transaction.RollBack();
+                            return Result.Cancelled;
+                        }
+                        VersioningSchema.StartNewVersion(ActiveCommandModel.Document, viewModel.IsMajor);
+                    }
+                    var result = taskDialog.Show();
+                    if (result == TaskDialogResult.Cancel)
+                    {
+                        transaction.RollBack();
+                        return Result.Cancelled;
                     }
                     transaction.Commit();
                 }

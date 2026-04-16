@@ -19,7 +19,7 @@ namespace GPlus.Base.Resources.Localizations {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Content {
@@ -380,6 +380,15 @@ namespace GPlus.Base.Resources.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Major version.
+        /// </summary>
+        public static string MajorVersion {
+            get {
+                return ResourceManager.GetString("MajorVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage Data Links.
         /// </summary>
         public static string ManageDataLinks {
@@ -417,6 +426,15 @@ namespace GPlus.Base.Resources.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minor version.
+        /// </summary>
+        public static string MinorVersion {
+            get {
+                return ResourceManager.GetString("MinorVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {
@@ -450,6 +468,15 @@ namespace GPlus.Base.Resources.Localizations {
         public static string NewSharedParameter {
             get {
                 return ResourceManager.GetString("NewSharedParameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New version.
+        /// </summary>
+        public static string NewVersion {
+            get {
+                return ResourceManager.GetString("NewVersion", resourceCulture);
             }
         }
         

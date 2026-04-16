@@ -63,13 +63,16 @@ public static class VersioningSchema
         doc.ProjectInformation.SetEntity(entity);
     }
 
-    public static void StartNewVersion(Document doc)
+    public static void StartNewVersion(Document doc, bool isMajor =true)
     {
         if (!TryGetSchema(doc.ProjectInformation, out var versions, out var isRecording) || !isRecording)
             return;
+        double currentVersion = versions.Max(e => e.Order);
+        double newVersionValue = isMajor ? Math.Floor(currentVersion) + 1 : Math.Round(currentVersion + 0.01, 2);
+
         var newVersion = new VersioningModel()
         {
-            Order = versions.Count,
+            Order = newVersionValue,
             VersionGuid = Document.GetDocumentVersion(doc).VersionGUID,
             CreatedOn = DateTime.Now,
         };

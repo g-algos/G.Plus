@@ -4,6 +4,8 @@
     <BuildType Name="2025-Release" />
     <BuildType Name="2026-Debug" />
     <BuildType Name="2026-Release" />
+    <BuildType Name="2027-Debug" />
+    <BuildType Name="2027-Release" />
   </Configurations>
   <Project Path="../GPlus.Base/GPlus.Base.csproj" />
   <Project Path="../GPlus.UI/GPlus.UI.csproj" />

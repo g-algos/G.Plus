@@ -367,4 +367,13 @@ la Version</value>
   <data name="Visualize" xml:space="preserve">
     <value>Visualizer</value>
   </data>
+  <data name="MajorVersion" xml:space="preserve">
+    <value>Version majeure</value>
+  </data>
+  <data name="MinorVersion" xml:space="preserve">
+    <value>Version mineure</value>
+  </data>
+  <data name="NewVersion" xml:space="preserve">
+    <value>Nouvelle version</value>
+  </data>
 </root>

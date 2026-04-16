@@ -1,19 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
 	<UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x64</Platforms>
 	<LangVersion>preview</LangVersion>
-	<Configurations>2025-Debug;2026-Debug;2025-Release;2026-Release</Configurations>
+	<Configurations>2025-Debug;2026-Debug;2025-Release;2026-Release;2027-Debug;2027-Release</Configurations>
 	<VersionTarget>$(Configuration.Substring(0, 4))</VersionTarget>
 	<DefineConstants>$(DefineConstants);V$(VersionTarget)</DefineConstants>
 	<Version>1.0.0</Version>
   </PropertyGroup>
-
+	<Choose>
+		<When Condition="$(VersionTarget) &lt; 2027">
+			<PropertyGroup>
+				<TargetFramework>net8.0-windows</TargetFramework>
+			</PropertyGroup>
+		</When>
+		<Otherwise>
+			<PropertyGroup>
+				<TargetFramework>net10.0-windows</TargetFramework>
+			</PropertyGroup>
+		</Otherwise>
+	</Choose>
   <ItemGroup>
     <None Remove="Resources\PayMeACoffe.png" />
   </ItemGroup>

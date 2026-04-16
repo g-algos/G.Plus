@@ -1,34 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<ApplicationPackage SchemaVersion="1.0" AutodeskProduct="Revit" ProductType="Application">
-	<CompanyDetails>
-		<CompanyName>etc-tec</CompanyName>
-		<CompanyUrl>https://g-algos.com</CompanyUrl>
-	</CompanyDetails>
-	<Components>
-		<ComponentEntry AppName="G.plus" ModuleName="./Contents/2023/GPlus.dll" AppDescription="Descrição curta do teu plugin">
-			<RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="2023" SeriesMax="2023" />
-			<ComponentEntryAppType>Application</ComponentEntryAppType>
-		</ComponentEntry>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ApplicationPackage SchemaVersion="1.0" AutodeskProduct="Revit" Name="G.plus" Description="Smarter Data Management &amp; Visualization : G.plus is a G.algos add-in for Autodesk® Revit® that enhances data control, clarity, and collaboration. It bridges the gap between modeling and documentation." AppVersion="2.0.0 " FriendlyVersion="2.0.0" ProductType="Application" SupportedLocales="Enu" AppNameSpace="appstore.exchange.autodesk.com" Author="G.algos" HelpFile="./Contents/help.html" ProductCode="{E92BFB2A-F089-401F-86BE-4683D0A669DC}" UpgradeCode="{9C76B2EF-8541-403D-B7C0-183FA47D43BC} " Icon="./Contents/Appicon.ico" OnlineDocumentation="https://g-algos.com/">
+	<CompanyDetails Name="G.algos" Email="contact@g-algos.com" Url="https://g-algos.com/" />
+	<RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="R2025" SeriesMax="R2026" />
+	<Components Description="Parts 2025">
+		<RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="R2025" SeriesMax="R2025" />
+		<ComponentEntry AppName="G.plus" Version="2.0.1" ModuleName="./Contents/Addins/2025/GPlus.addin" AppDescription="Smarter Data Management &amp; Visualization : G.plus is a G.algos add-in for Autodesk® Revit® that enhances data control, clarity, and collaboration. It bridges the gap between modeling and documentation." />
 	</Components>
-	<Components>
-		<ComponentEntry AppName="G.plus" ModuleName="./Contents/2024/GPlus.dll" AppDescription="Descrição curta do teu plugin">
-			<RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="2024" SeriesMax="2024" />
-			<ComponentEntryAppType>Application</ComponentEntryAppType>
-		</ComponentEntry>
+	<Components Description="Parts 2026">
+		<RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="R2026" SeriesMax="R2026" />
+		<ComponentEntry AppName="G.plus" Version="2.0.1" ModuleName="./Contents/Addins/2026/GPlus.addin" AppDescription="Smarter Data Management &amp; Visualization : G.plus is a G.algos add-in for Autodesk® Revit® that enhances data control, clarity, and collaboration. It bridges the gap between modeling and documentation." />
 	</Components>
-	<Components>
-		<ComponentEntry AppName="G.plus" ModuleName="./Contents/2025/GPlus.dll" AppDescription="Descrição curta do teu plugin">
-			<RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="2025" SeriesMax="2025" />
-			<ComponentEntryAppType>Application</ComponentEntryAppType>
-		</ComponentEntry>
+	<Components Description="Parts 2027">
+		<RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="R2027" SeriesMax="R2027" />
+		<ComponentEntry AppName="G.plus" Version="2.0.1" ModuleName="./Contents/Addins/2026/GPlus.addin" AppDescription="Smarter Data Management &amp; Visualization : G.plus is a G.algos add-in for Autodesk® Revit® that enhances data control, clarity, and collaboration. It bridges the gap between modeling and documentation." />
 	</Components>
-	<Components>
-		<ComponentEntry AppName="G.plus" ModuleName="./Contents/2026/GPlus.dll" AppDescription="Descrição curta do teu plugin">
-			<RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="2026" SeriesMax="2026" />
-			<ComponentEntryAppType>Application</ComponentEntryAppType>
-		</ComponentEntry>
-	</Components>
-	<ApplicationPackagePaths>
-		<ApplicationPackagePath>Gplus.bundle</ApplicationPackagePath>
-	</ApplicationPackagePaths>
 </ApplicationPackage>
