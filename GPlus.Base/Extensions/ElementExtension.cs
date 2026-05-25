@@ -12,6 +12,7 @@ public static class ElementExtension
     private const float Scale = 50;
     public static Parameter? GetParameter(this Element element, ElementId parameterId)
     {
+
         if (element == null || parameterId == null)
             return null;
 
@@ -41,6 +42,24 @@ public static class ElementExtension
 
         return element.get_Parameter(definition)
             ?? element.Document.GetElement(element.GetTypeId())?.get_Parameter(definition);
+    }
+    public static Parameter? GetParameter(this Element element, Guid parameterGuid)
+    {
+
+        if (element == null)
+            return null;
+        return element.get_Parameter(parameterGuid)?.HasValue == true?
+            element.get_Parameter(parameterGuid)
+            :element.Document.GetElement(element.GetTypeId())?.get_Parameter(parameterGuid);
+    }
+    public static Parameter? GetParameter(this Element element, string name)
+    {
+
+        if (element == null)
+            return null;
+
+        return element.LookupParameter(name)
+            ?? element.Document.GetElement(element.GetTypeId())?.LookupParameter(name);
     }
 
     public static ImageSource? GetFillPatternImage(this FillPatternElement fillPattern)

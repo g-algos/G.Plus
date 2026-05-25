@@ -25,6 +25,11 @@ public partial class ManageLocationSchemasVM : ObservableObject
     [ObservableProperty] private string _searchText = string.Empty;
     partial void OnSelectedSchemaChanged(LocalizationVM value)
     {
+        if (value == null)
+        {
+            LocalizationSchemaItems.Clear();
+            return;
+        }
         value.UpdateSchema += (s, e) => { OnUpdateSchema(e); };
         var orderedItems = value.Items.OrderBy(e => e.Value).ToList();
         LocalizationSchemaItems = new ObservableCollection<LocationItemVM>(orderedItems);

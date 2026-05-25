@@ -1,8 +1,12 @@
 ﻿using Autodesk.Revit.DB.ExtensibleStorage;
+using DocumentFormat.OpenXml.Wordprocessing;
 using GPlus.Base.Extensions;
 using GPlus.Base.Models;
 using System.Text.Json;
+using System.Windows;
+using System.Xml.Linq;
 using Color = Autodesk.Revit.DB.Color;
+using Document = Autodesk.Revit.DB.Document;
 
 namespace GPlus.Base.Schemas
 {
@@ -117,6 +121,10 @@ namespace GPlus.Base.Schemas
             HashSet<string> values = new HashSet<string>();
             List<Document> docSet = new List<Document>();
 
+            Element elementParameter = doc.GetElement(Parameter);
+            Guid? parameterGuid = elementParameter is SharedParameterElement shared ? shared.GuidValue : null;
+            string name = elementParameter?.Name ?? string.Empty;
+
             if (IncludeLinks)
             {
                 docSet = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_RvtLinks)
@@ -125,15 +133,22 @@ namespace GPlus.Base.Schemas
                     .ToList();
             }
             docSet.Add(doc);
+
             foreach (var document in docSet)
             {
                 foreach (var category in Categories)
                 {
-                    foreach (var v in new FilteredElementCollector(document)
+                    var objValues = new FilteredElementCollector(document)
                         .OfCategoryId(category)
                         .ToElements()
-                        .Select(e => e.GetParameter(Parameter)?.GetValue()?.ToString())
-                        .Where(v => v != null))
+                        .Select(e => Parameter.Value < 0
+                                        ? e.GetParameter(Parameter)
+                                        : parameterGuid.HasValue
+                                            ? e.GetParameter(parameterGuid.Value)
+                                            : e.GetParameter(name))
+                        .Where(p => p != null && p.HasValue)
+                        .Select(e => e.GetValue().ToString());
+                    foreach (var v in objValues)
                     {
                         values.Add(v!);
                     }

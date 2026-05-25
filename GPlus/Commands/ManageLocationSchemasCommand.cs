@@ -36,11 +36,11 @@ namespace GPlus.Commands
                         selectedVM = new LocalizationVM(
                             selectedModel.Id,
                             selectedModel.Name,
-                            selectedModel.Categories.Select(e => new IdentityVM() 
-                            { 
+                            selectedModel.Categories.Select(e => new IdentityVM()
+                            {
                                 Id = e,
 #if V2023
-                                Name = LabelUtils.GetLabelFor((BuiltInCategory)e.IntegerValue)
+                                                    Name = LabelUtils.GetLabelFor((BuiltInCategory)e.IntegerValue)
 #else
                                 Name = LabelUtils.GetLabelFor((BuiltInCategory)e.Value)
 #endif
@@ -53,11 +53,11 @@ namespace GPlus.Commands
                     foreach (var model in listLocM)
                     {
                         var parameter = new IdentityVM() { Name = ActiveCommandModel.Document.GetParameterName(model.Parameter), Id = model.Parameter };
-                        var modelCategories = model.Categories.Select(c => new IdentityVM() 
-                        { 
+                        var modelCategories = model.Categories.Select(c => new IdentityVM()
+                        {
                             Id = c,
 #if V2023
-                            Name = LabelUtils.GetLabelFor((BuiltInCategory)c.IntegerValue)
+                                                Name = LabelUtils.GetLabelFor((BuiltInCategory)c.IntegerValue)
 #else
                             Name = LabelUtils.GetLabelFor((BuiltInCategory)c.Value)
 #endif

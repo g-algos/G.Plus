@@ -3,6 +3,7 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 using GPlus.Base.Extensions;
 using GPlus.Base.Models;
 using System.Windows;
+using System.Xml.Linq;
 using View = Autodesk.Revit.DB.View;
 
 namespace GPlus.Base.Schemas
@@ -63,7 +64,7 @@ namespace GPlus.Base.Schemas
         {
             try
             {
-                List<Element> elements = new();
+
                 List<Document> documents = new() { view.Document };
 
                 if(!localization.Valid)
@@ -75,123 +76,118 @@ namespace GPlus.Base.Schemas
                         .Select(e => (e as RevitLinkInstance).GetLinkDocument())
                         .ToList());
                 }
+       
+                Element elementParameter = view.Document.GetElement(localization.Parameter);
+                Guid? parameterGuid = elementParameter is SharedParameterElement shared? shared.GuidValue:null;
+                string name = elementParameter?.Name ?? string.Empty;
+
                 foreach (Document doc in documents)
                 {
                     try
                     {
                         foreach (ElementId category in localization.Categories)
                         {
-                            elements.AddRange(new FilteredElementCollector(doc, view.Id).OfCategoryId(category).WhereElementIsNotElementType().ToElements().ToList());
+                            List<Element> elements = new FilteredElementCollector(doc, view.Id).OfCategoryId(category).WhereElementIsNotElementType().ToElements().ToList();
+                            if (localization.ByValue)
+                            {
+
+                                foreach (Element element in elements)
+                                {
+                                    try
+                                    {
+
+                                        var ogs = new OverrideGraphicSettings();
+
+                                        Parameter? parameter = localization.Parameter.Value < 0
+                                            ? element.GetParameter(localization.Parameter)
+                                            : parameterGuid.HasValue
+                                                ? element.GetParameter(parameterGuid.Value)
+                                                : element.GetParameter(name);
+
+                                        if (parameter == null)
+                                            continue;
+
+                                        var value = parameter.GetValue();
+
+
+                                        if (value == null)
+                                            continue;
+
+                                        var item = localization.Items.FirstOrDefault(e => e.Value == value.ToString());
+                                        if (item == null)
+                                            continue;
+
+                                        if (view is View3D)
+                                        {
+                                            ogs.SetSurfaceForegroundPatternColor(item.Color);
+                                            ogs.SetSurfaceForegroundPatternId(new ElementId(item.FillPattern));
+                                        }
+                                        else
+                                        {
+                                            ogs.SetCutBackgroundPatternColor(item.Color);
+                                            ogs.SetCutBackgroundPatternId(new ElementId(item.FillPattern));
+                                        }
+
+                                        view.SetElementOverrides(element.Id, ogs);
+                                    }
+                                    catch { }
+                                }
+                            }
+                            else
+                            {
+                                var ranges = localization.Items
+                                    .Select(value =>
+                                    {
+                                        var min = double.Parse(value.Value.Split(":")[0]);
+                                        var max = double.Parse(value.Value.Split(":")[1]);
+                                        return new { Min = min, Max = max, Color = value.Color, FillPattern = value.FillPattern };
+
+                                    });
+                                foreach (Element element in elements)
+                                {
+                                    try
+                                    {
+                                        var ogs = new OverrideGraphicSettings();
+
+                                        Parameter? parameter = localization.Parameter.Value < 0
+                                                ? element.GetParameter(localization.Parameter)
+                                                : parameterGuid.HasValue
+                                                    ? element.get_Parameter(parameterGuid.Value)
+                                                    : element.LookupParameter(name);
+
+                                        if (parameter == null || !parameter.HasValue)
+                                            continue;
+
+                                        if (!(parameter.StorageType == StorageType.Integer || parameter.StorageType == StorageType.Double))
+                                            break;
+                                        double value = parameter.StorageType == StorageType.Integer ? parameter.AsInteger() : parameter.AsDouble();
+                                        if (value == null)
+                                            continue;
+
+                                        var item = ranges.FirstOrDefault(e => value >= e.Min && value <= e.Max);
+                                        if (item == null)
+                                            continue;
+
+                                        if (view is View3D)
+                                        {
+                                            ogs.SetSurfaceForegroundPatternColor(item.Color);
+                                            ogs.SetSurfaceForegroundPatternId(new ElementId(item.FillPattern));
+                                        }
+                                        else
+                                        {
+                                            ogs.SetCutBackgroundPatternColor(item.Color);
+                                            ogs.SetCutBackgroundPatternId(new ElementId(item.FillPattern));
+                                        }
+
+                                        view.SetElementOverrides(element.Id, ogs);
+                                    }
+                                    catch { }
+                                }
+                            }
                         }
                     }
                     catch { }
-                }
-
-                bool isTypeParameter = false;
-
-                // Detecta onde está o parâmetro (tipo ou instância) apenas uma vez
-                var firstElement = elements.FirstOrDefault();
-                Parameter? testParam = firstElement?.GetParameter(localization.Parameter);
-                if (testParam == null || !testParam.HasValue)
-                {
-                    var type = firstElement?.Document.GetElement(firstElement.GetTypeId());
-                    if (type != null)
-                    {
-                        testParam = type.GetParameter(localization.Parameter);
-                        if (testParam != null)
-                            isTypeParameter = true;
-                    }
-                }
-
-                if (localization.ByValue)
-                {
-
-                    foreach (Element element in elements)
-                    {
-                        try
-                        {
-                            
-                            var ogs = new OverrideGraphicSettings();
-                            Parameter? parameter = isTypeParameter
-                                ? element.Document.GetElement(element.GetTypeId())?.GetParameter(localization.Parameter)
-                                : element.GetParameter(localization.Parameter);
-
-                            if (parameter == null || !parameter.HasValue)
-                                continue;
-
-                            var value = parameter.GetValue();
-                            if (value == null)
-                                continue;
-
-                            var item = localization.Items.FirstOrDefault(e => e.Value == value.ToString());
-                            if (item == null)
-                                continue;
-
-                            if (view is View3D)
-                            {
-                                ogs.SetSurfaceForegroundPatternColor(item.Color);
-                                ogs.SetSurfaceForegroundPatternId(new ElementId(item.FillPattern));
-                            }
-                            else
-                            {
-                                ogs.SetCutBackgroundPatternColor(item.Color);
-                                ogs.SetCutBackgroundPatternId(new ElementId(item.FillPattern));
-                            }
-
-                            view.SetElementOverrides(element.Id, ogs);
-                        }
-                        catch { }
-                    }
-                }
-                else
-                {
-                    var ranges = localization.Items
-                        .Select(value=>
-                        {
-                            var min = double.Parse(value.Value.Split(":")[0]);
-                            var max = double.Parse(value.Value.Split(":")[1]);
-                        return new { Min = min, Max = max, Color = value.Color, FillPattern = value.FillPattern};
-
-                        });
-                    foreach (Element element in elements)
-                    {
-                        try
-                        {
-                            var ogs = new OverrideGraphicSettings();
-
-                            Parameter? parameter = isTypeParameter
-                                ? element.Document.GetElement(element.GetTypeId())?.GetParameter(localization.Parameter)
-                                : element.GetParameter(localization.Parameter);
-
-                            if (parameter == null || !parameter.HasValue)
-                                continue;
-
-                            if (!(parameter.StorageType == StorageType.Integer || parameter.StorageType == StorageType.Double))
-                                break;
-                            double value = parameter.StorageType == StorageType.Integer? parameter.AsInteger():  parameter.AsDouble();
-                            if (value == null)
-                                continue;
-
-                            var item = ranges.FirstOrDefault(e => value >= e.Min && value <= e.Max);
-                            if (item == null)
-                                continue;
-
-                            if (view is View3D)
-                            {
-                                ogs.SetSurfaceForegroundPatternColor(item.Color);
-                                ogs.SetSurfaceForegroundPatternId(new ElementId(item.FillPattern));
-                            }
-                            else
-                            {
-                                ogs.SetCutBackgroundPatternColor(item.Color);
-                                ogs.SetCutBackgroundPatternId(new ElementId(item.FillPattern));
-                            }
-
-                            view.SetElementOverrides(element.Id, ogs);
-                        }
-                        catch { }
-                    }
-                }
+                }               
             }
             catch { }
         }
